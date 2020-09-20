@@ -8,11 +8,14 @@ public class PointDistance {
     Point p2 = new Point(0, -3.5);
 
     //calling function distance
-    System.out.println("Distance between two points is " + distance(p1, p2));
+    System.out.println("Distance between two points is: " + distance(p1, p2));
+
+    //using method distance from class Point
+    System.out.println("Distance between two points (method from the class) is: " + p1.distance(p2));
+
   }
 
   // function for calculating distance between two points
-
   public static double distance(Point p1, Point p2) {
     return Math.sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
   }
