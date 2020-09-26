@@ -12,18 +12,30 @@ public class ContactCreationTests {
   public void setUp() throws Exception {
     wd = new FirefoxDriver();
     wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    login();
   }
 
   @Test
   public void testContactCreation() throws Exception {
-    wd.get("http://localhost/addressbook/index.php");
-    wd.findElement(By.name("user")).click();
-    wd.findElement(By.name("user")).clear();
-    wd.findElement(By.name("user")).sendKeys("admin");
-    wd.findElement(By.name("pass")).clear();
-    wd.findElement(By.name("pass")).sendKeys("secret");
-    wd.findElement(By.xpath("//input[@value='Login']")).click();
-    wd.findElement(By.linkText("add new")).click();
+    initContactCreation();
+    fillContactForm();
+    submitContactForm();
+    returnToHomePage();
+  }
+
+  private void logout() {
+    wd.findElement(By.linkText("Logout")).click();
+  }
+
+  private void returnToHomePage() {
+    wd.findElement(By.linkText("home page")).click();
+  }
+
+  private void submitContactForm() {
+    wd.findElement(By.xpath("(//input[@name='submit'])[2]")).click();
+  }
+
+  private void fillContactForm() {
     wd.findElement(By.name("firstname")).click();
     wd.findElement(By.name("firstname")).clear();
     wd.findElement(By.name("firstname")).sendKeys("Monica");
@@ -36,19 +48,28 @@ public class ContactCreationTests {
     wd.findElement(By.name("home")).click();
     wd.findElement(By.name("home")).clear();
     wd.findElement(By.name("home")).sendKeys("+1555567888");
-    wd.findElement(By.name("mobile")).click();
-    wd.findElement(By.name("mobile")).clear();
-    wd.findElement(By.name("mobile")).sendKeys("+1222444555");
     wd.findElement(By.name("email")).click();
     wd.findElement(By.name("email")).clear();
     wd.findElement(By.name("email")).sendKeys("monica.geller@friends.com");
-    wd.findElement(By.xpath("(//input[@name='submit'])[2]")).click();
-    wd.findElement(By.linkText("home page")).click();
-    wd.findElement(By.linkText("Logout")).click();
+  }
+
+  private void initContactCreation() {
+    wd.findElement(By.linkText("add new")).click();
+  }
+
+  private void login() {
+    wd.get("http://localhost/addressbook/index.php");
+    wd.findElement(By.name("user")).click();
+    wd.findElement(By.name("user")).clear();
+    wd.findElement(By.name("user")).sendKeys("admin");
+    wd.findElement(By.name("pass")).clear();
+    wd.findElement(By.name("pass")).sendKeys("secret");
+    wd.findElement(By.xpath("//input[@value='Login']")).click();
   }
 
   @AfterMethod(alwaysRun = true)
   public void tearDown() throws Exception {
+    logout();
     wd.quit();
   }
 
