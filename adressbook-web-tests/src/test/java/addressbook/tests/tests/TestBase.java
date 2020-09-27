@@ -6,16 +6,16 @@ import org.testng.annotations.BeforeMethod;
 
 public class TestBase {
 
-  protected final ApplicationManager applicationManager = new ApplicationManager();
+  protected final ApplicationManager app = new ApplicationManager();
 
   @BeforeMethod(alwaysRun = true)
   public void setUp() throws Exception {
-    applicationManager.init();
+    app.init();
   }
 
   @AfterMethod(alwaysRun = true)
   public void tearDown() throws Exception {
-    applicationManager.stop();
+    app.stop();
   }
 
 }
