@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 public class BaseHelper {
 
 
-  private WebDriver wd;
+  protected WebDriver wd;
 
   public BaseHelper(WebDriver wd) {
     this.wd=wd;
@@ -19,7 +19,7 @@ public class BaseHelper {
   }
 
   public void type(By locator, String text) {
-    click(locator);
+    wd.findElement(locator).click();
     wd.findElement(locator).clear();
     wd.findElement(locator).sendKeys(text);
   }
