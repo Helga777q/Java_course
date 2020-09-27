@@ -3,24 +3,26 @@ package addressbook.tests.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class SessionHelper extends BaseHelper {
-  private WebDriver wd;
+public class SessionHelper {
+  public  WebDriver wd;
 
   public SessionHelper(WebDriver wd){
-    super(wd);
+    this.wd= wd;
   }
 
 
   public void login(String username, String password) {
     wd.get("http://localhost/addressbook/");
-    type(By.name("user"), username);
-    type(By.name("pass"), password);
-    click(By.xpath("//input[@value='Login']"));
+    wd.findElement(By.name("user")).click();
+    wd.findElement(By.name("user")).clear();
+    wd.findElement(By.name("user")).sendKeys(username);
+    wd.findElement(By.name("pass")).clear();
+    wd.findElement(By.name("pass")).sendKeys(password);
+    wd.findElement(By.xpath("//input[@value='Login']")).click();
   }
 
   public void logout() {
-
-    click(By.linkText("Logout"));
+    wd.findElement(By.linkText("Logout")).click();
   }
 
 

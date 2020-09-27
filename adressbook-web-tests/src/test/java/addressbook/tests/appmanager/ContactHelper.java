@@ -5,7 +5,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class ContactHelper extends BaseHelper {
-  private WebDriver wd;
 
   public ContactHelper(WebDriver wd) {
     super(wd);
