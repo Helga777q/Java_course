@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 public class GroupUpdateTests extends TestBase {
 
   @Test
-  public void testGroupEdition (){
+  public void testGroupUpdate(){
     app.getNavigationHelper().goToGroupPage();
     app.getGroupHelper().selectGroup();
     app.getGroupHelper().initGroupUpdate();
