@@ -35,4 +35,13 @@ public class GroupHelper extends BaseHelper {
   public void selectGroup() {
     click(By.name("selected[]"));
   }
+
+  public void initGroupUpdate() {
+    click((By.name("edit")));
+  }
+
+
+  public void submitGroupUpdate() {
+    click(By.name("update"));
+  }
 }
