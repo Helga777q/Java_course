@@ -38,13 +38,27 @@ public class ContactHelper extends BaseHelper {
     click(By.xpath("//input[@value='Delete']"));
   }
 
-
   public void acceptAlertContactsDeletion() {
     wd.switchTo().alert().accept();
   }
 
   public void selectAllContacts() {
     click(By.id("MassCB"));
+  }
 
+  public void goToContactEditPage() {
+    click(By.xpath("//img[@alt='Edit']"));
+  }
+
+  public void deleteContactFromEditPage() {
+    click(By.xpath("(//input[@name='update'])[3]"));
+  }
+
+  public void openContactDetailsPage() {
+    click(By.xpath("//img[@alt='Details']"));
+  }
+
+  public void clickContactModifyButton() {
+    click(By.name("modifiy"));
   }
 }
