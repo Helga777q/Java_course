@@ -61,4 +61,8 @@ public class ContactHelper extends BaseHelper {
   public void clickContactModifyButton() {
     click(By.name("modifiy"));
   }
+
+  public void submitContactUpdate() {
+    click(By.xpath("(//input[@name='update'])"));
+  }
 }
