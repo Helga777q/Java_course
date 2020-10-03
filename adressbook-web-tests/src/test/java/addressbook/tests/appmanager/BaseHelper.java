@@ -19,7 +19,7 @@ public class BaseHelper {
   }
 
   public void type(By locator, String text) {
-    wd.findElement(locator).click();
+    click(locator);
     wd.findElement(locator).clear();
     wd.findElement(locator).sendKeys(text);
   }
