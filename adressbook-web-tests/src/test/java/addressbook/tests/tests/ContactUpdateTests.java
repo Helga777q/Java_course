@@ -1,6 +1,7 @@
 package addressbook.tests.tests;
 
 import addressbook.tests.model.ContactData;
+import addressbook.tests.model.GroupData;
 import org.testng.annotations.Test;
 
 public class ContactUpdateTests extends TestBase {
@@ -8,17 +9,45 @@ public class ContactUpdateTests extends TestBase {
 
   @Test
   public void testContactUpdate() throws Exception {
+    app.getContactHelper().contactPreConditions((new ContactData(
+            "Monica1",
+            "Geller",
+            "New York, Central Perk 3",
+            "+1555567888",
+            "monica.geller@friends.com",
+            "Test")
+    ));
     app.getContactHelper().goToContactEditPage();
-    app.getContactHelper().fillContactForm(new ContactData("New FirstName", "New LastNAme", "new Address: London", "+1888888", "newemail@gmail.com", null) , false);
+    app.getContactHelper().fillContactForm(new ContactData(
+            "New FirstName", "New LastNAme", "new Address: London", "+1888888", "newemail@gmail.com", null) , false);
     app.getContactHelper().submitContactUpdate();
     app.getContactHelper().returnToHomePage();
   }
 
   @Test
   public void testContactUpdateDetailsPage() throws Exception {
+    if (!app.getContactHelper().isContactPresent()) {
+      app.getNavigationHelper().goToGroupPage();
+      if (!app.getGroupHelper().isGroupPresent()) {
+        app.getGroupHelper().createGroup(new GroupData(
+                "Test",
+                "test contact update",
+                null
+        ));
+      }
+      app.getContactHelper().createContactWithGroup((new ContactData(
+              "Monica1",
+              "Geller",
+              "New York, Central Perk 3",
+              "+1555567888",
+              "monica.geller@friends.com",
+              "Test")
+      ));
+    }
     app.getContactHelper().openContactDetailsPage();
     app.getContactHelper().clickContactModifyButton();
-    app.getContactHelper().fillContactForm(new ContactData("Modify New FirstName", "New LastNAme", "new Address: London", "+1888888", "newemail@gmail.com", null), false );
+    app.getContactHelper().fillContactForm(new ContactData(
+            "Modify4 New FirstName", "New LastNAme", "new Address: London", "+1888888", "newemail@gmail.com", null), false );
     app.getContactHelper().submitContactUpdate();
     app.getContactHelper().returnToHomePage();
   }

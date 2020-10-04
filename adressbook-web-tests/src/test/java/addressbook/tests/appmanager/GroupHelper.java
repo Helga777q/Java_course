@@ -3,12 +3,14 @@ package addressbook.tests.appmanager;
 import addressbook.tests.model.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import sun.plugin2.util.BrowserType;
 
 public class GroupHelper extends BaseHelper {
 
   public GroupHelper(WebDriver wd) {
     super(wd);
   }
+
 
   public void returnToGroupPage() {
     click(By.linkText("group page"));
@@ -46,7 +48,7 @@ public class GroupHelper extends BaseHelper {
   }
 
   public boolean isGroupPresent() {
-   return isElementPresent(By.name("selected[]"));
+    return isElementPresent(By.name("selected[]"));
   }
 
   public void createGroup(GroupData group) {
@@ -54,5 +56,15 @@ public class GroupHelper extends BaseHelper {
     fillGroupForm(group);
     submitGroupCreation();
     returnToGroupPage();
+  }
+
+
+  public void createGroupIfNotPresent(GroupData group) {
+    click(By.linkText("groups"));
+    if (!isGroupPresent()) {
+      createGroup(group);
+    } else {
+      click(By.linkText("home"));
+    }
   }
 }
