@@ -10,7 +10,7 @@ public class GroupUpdateTests extends TestBase {
     app.getNavigationHelper().goToGroupPage();
     app.getGroupHelper().selectGroup();
     app.getGroupHelper().initGroupUpdate();
-    app.getGroupHelper().fillGroupForm(new GroupData("update-name", "update -header", "update-footer"));
+    app.getGroupHelper().fillGroupForm(new GroupData("Test", "update -header", "update-footer"));
     app.getGroupHelper().submitGroupUpdate();
     app.getGroupHelper().returnToGroupPage();
   }
