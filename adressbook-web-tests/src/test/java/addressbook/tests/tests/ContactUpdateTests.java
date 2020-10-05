@@ -19,7 +19,12 @@ public class ContactUpdateTests extends TestBase {
     ));
     app.getContactHelper().goToContactEditPage();
     app.getContactHelper().fillContactForm(new ContactData(
-            "New FirstName", "New LastNAme", "new Address: London", "+1888888", "newemail@gmail.com", null) , false);
+            "New FirstName",
+            "New LastNAme",
+            "new Address: London",
+            "+1888888",
+            "newemail@gmail.com",
+            null) , false);
     app.getContactHelper().submitContactUpdate();
     app.getContactHelper().returnToHomePage();
   }
