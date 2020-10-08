@@ -67,4 +67,5 @@ public class GroupHelper extends BaseHelper {
       click(By.linkText("home"));
     }
   }
+
 }
