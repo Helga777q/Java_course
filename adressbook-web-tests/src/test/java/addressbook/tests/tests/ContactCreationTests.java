@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 public class ContactCreationTests extends TestBase {
 
   @BeforeMethod
-  public void checkIfGroupExists(){
+  public void contactCreationPreconditions(){
     app.getGroupHelper().createGroupIfNotPresent(new GroupData(
             "Test",
             "test2-header",

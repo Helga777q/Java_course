@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 public class ContactDeletionTests extends TestBase {
 
   @BeforeMethod
-  public  void checkIfContactExists(){
+  public  void contactDeletionPreconditions(){
     //check if the group exists, if not created a new group, that will be used for contact creation
     app.getGroupHelper().createGroupIfNotPresent(new GroupData(
             "Test",

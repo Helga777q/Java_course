@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 public class ContactUpdateTests extends TestBase {
 
   @BeforeMethod
-  public void checkIfContactExists() {
+  public void contactUpdatePreconditions() {
     if (!app.getContactHelper().isContactPresent()) {
       app.getNavigationHelper().goToGroupPage();
       if (!app.getGroupHelper().isGroupPresent()) {
