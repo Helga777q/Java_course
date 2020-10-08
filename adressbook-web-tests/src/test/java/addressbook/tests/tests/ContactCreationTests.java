@@ -2,17 +2,22 @@ package addressbook.tests.tests;
 
 import addressbook.tests.model.ContactData;
 import addressbook.tests.model.GroupData;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class ContactCreationTests extends TestBase {
 
-
-  @Test
-  public void testContactCreationWithGroup() throws Exception {
+  @BeforeMethod
+  public void checkIfGroupExists(){
     app.getGroupHelper().createGroupIfNotPresent(new GroupData(
             "Test",
             "test2-header",
             null));
+  }
+
+
+  @Test
+  public void testContactCreationWithGroup() throws Exception {
     app.getContactHelper().createContactWithGroup(new ContactData(
             "Monica1",
             "Geller",
