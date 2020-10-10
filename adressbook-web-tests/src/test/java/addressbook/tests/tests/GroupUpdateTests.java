@@ -18,7 +18,7 @@ public class GroupUpdateTests extends TestBase {
   @Test
   public void testGroupUpdate(){
     int before = app.getGroupHelper().getGroupCount();
-    app.getGroupHelper().selectGroup();
+    app.getGroupHelper().selectGroup(before-1);
     app.getGroupHelper().initGroupUpdate();
     app.getGroupHelper().fillGroupForm(new GroupData("Test", "test2-header", "update-footer"));
     app.getGroupHelper().submitGroupUpdate();
