@@ -6,6 +6,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class GroupUpdateTests extends TestBase {
@@ -23,10 +24,17 @@ public class GroupUpdateTests extends TestBase {
     List<GroupData> before = app.getGroupHelper().getGroupList();
     app.getGroupHelper().selectGroup(before.size() - 1);
     app.getGroupHelper().initGroupUpdate();
-    app.getGroupHelper().fillGroupForm(new GroupData("Test", "test2-header", "update-footer"));
+    GroupData group = new GroupData(before.get(before.size() - 1).getId(), "Test", "test2-header", "update-footer");
+    app.getGroupHelper().fillGroupForm(group);
     app.getGroupHelper().submitGroupUpdate();
     app.getGroupHelper().returnToGroupPage();
     List<GroupData> after = app.getGroupHelper().getGroupList();
     Assert.assertEquals(after.size(), before.size());
+
+    before.remove(before.size() - 1);
+    before.add(group);
+    Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+
+
   }
 }
