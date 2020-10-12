@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
+import java.util.concurrent.TimeUnit;
+
 public class ContactHelper extends BaseHelper {
 
   public ContactHelper(WebDriver wd) {
@@ -41,8 +43,8 @@ public class ContactHelper extends BaseHelper {
     click(By.linkText("add new"));
   }
 
-  public void selectContact() {
-    click(By.name("selected[]"));
+  public void selectContact(int index) {
+    wd.findElements(By.name("selected[]")).get(index).click();
   }
 
   public void deleteSelectedContacts() {
@@ -57,16 +59,18 @@ public class ContactHelper extends BaseHelper {
     click(By.id("MassCB"));
   }
 
-  public void goToContactEditPage() {
-    click(By.xpath("//img[@alt='Edit']"));
+  public void goToContactEditPage(int index) {
+    wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
   }
 
   public void deleteContactFromEditPage() {
     click(By.xpath("(//input[@name='update'])[3]"));
   }
 
-  public void openContactDetailsPage() {
-    click(By.xpath("//img[@alt='Details']"));
+  public void openContactDetailsPage(int index) {
+
+    wd.findElements(By.xpath("//img[@alt='Details']")).get(index).click();
+
   }
 
   public void clickContactModifyButton() {
@@ -99,5 +103,9 @@ public class ContactHelper extends BaseHelper {
 //counts quantity of Contacts
   public int getContactCount() {
    return  wd.findElements(By.name("selected[]")).size();
+  }
+
+  public void   waitForRedirectToHomePage(int waitingTime) {
+     wd.manage().timeouts().implicitlyWait(waitingTime, TimeUnit.SECONDS);
   }
 }
