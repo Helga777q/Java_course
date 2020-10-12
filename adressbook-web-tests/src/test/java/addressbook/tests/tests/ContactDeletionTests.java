@@ -34,7 +34,7 @@ public class ContactDeletionTests extends TestBase {
   @Test
   public void testContactDeletionHomePage() throws Exception {
     int before = app.getContactHelper().getContactCount();
-    app.getContactHelper().selectContact();
+    app.getContactHelper().selectContact(before -1);
     app.getContactHelper().deleteSelectedContacts();
     app.getContactHelper().acceptAlertContactsDeletion();
     int after = app.getContactHelper().getContactCount();
@@ -54,8 +54,9 @@ public class ContactDeletionTests extends TestBase {
   @Test
   public void testContactDeletionEditPage() throws Exception {
     int before = app.getContactHelper().getContactCount();
-    app.getContactHelper().goToContactEditPage();
+    app.getContactHelper().goToContactEditPage(before-1);
     app.getContactHelper().deleteContactFromEditPage();
+    app.getContactHelper().waitForRedirectToHomePage(4);
     int after = app.getContactHelper().getContactCount();
     Assert.assertEquals(after, before-1);
   }
@@ -63,14 +64,12 @@ public class ContactDeletionTests extends TestBase {
   @Test
   public void testContactDeletionViewEditPage() throws Exception {
     int before = app.getContactHelper().getContactCount();
-    app.getContactHelper().openContactDetailsPage();
+    app.getContactHelper().openContactDetailsPage(before-1);
     app.getContactHelper().clickContactModifyButton();
     app.getContactHelper().deleteContactFromEditPage();
+    app.getContactHelper().waitForRedirectToHomePage(4);
     int after = app.getContactHelper().getContactCount();
     Assert.assertEquals(after, before-1);
   }
-
-
-
 
 }

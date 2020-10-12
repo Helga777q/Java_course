@@ -23,6 +23,6 @@ public class NavigationHelper extends BaseHelper {
     if (isElementPresent(By.id("maintable"))){
       return;
     }
-    click(By.linkText("home page"));  }
+    click(By.linkText("home"));  }
 
 }

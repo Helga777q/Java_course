@@ -34,7 +34,7 @@ public class ContactUpdateTests extends TestBase {
   @Test
   public void testContactUpdate() throws Exception {
     int before = app.getContactHelper().getContactCount();
-    app.getContactHelper().goToContactEditPage();
+    app.getContactHelper().goToContactEditPage(before-1);
     app.getContactHelper().fillContactForm(new ContactData(
             "New FirstName",
             "New LastNAme",
@@ -51,7 +51,7 @@ public class ContactUpdateTests extends TestBase {
   @Test
   public void testContactUpdateDetailsPage() throws Exception {
     int before = app.getContactHelper().getContactCount();
-    app.getContactHelper().openContactDetailsPage();
+    app.getContactHelper().openContactDetailsPage(before-1);
     app.getContactHelper().clickContactModifyButton();
     app.getContactHelper().fillContactForm(new ContactData(
             "Modify4 New FirstName",
