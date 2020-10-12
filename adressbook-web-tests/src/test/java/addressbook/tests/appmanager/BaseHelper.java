@@ -4,6 +4,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class BaseHelper {
 
@@ -47,4 +51,13 @@ public class BaseHelper {
       return false;
     }
   }
+
+
+  public void waitForPresenceOfElement(int waitingTime, By locator) {
+    WebDriverWait wait = new WebDriverWait(wd, Duration.ofSeconds(waitingTime));
+    wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+
+    //wd.manage().timeouts().implicitlyWait(waitingTime, TimeUnit.SECONDS);  // Implicit wait
+  }
+
 }
