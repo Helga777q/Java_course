@@ -4,13 +4,12 @@ import addressbook.tests.model.ContactData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import java.time.Duration;
-import java.util.concurrent.TimeUnit;
+import javax.print.DocFlavor;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends BaseHelper {
 
@@ -19,7 +18,7 @@ public class ContactHelper extends BaseHelper {
   }
 
   public void returnToHomePage() {
-    if (isElementPresent(By.id("maintable"))){
+    if (isElementPresent(By.id("maintable"))) {
       return;
     }
     click(By.linkText("home page"));
@@ -36,7 +35,7 @@ public class ContactHelper extends BaseHelper {
     type(By.name("home"), contactData.getHomePhone());
     type(By.name("email"), contactData.getEmail());
 
-    if (creation){
+    if (creation) {
       new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
@@ -86,31 +85,41 @@ public class ContactHelper extends BaseHelper {
   }
 
 
- public void createContactWithGroup(ContactData contact){
-   initContactCreation();
-   fillContactForm(contact, true);
-   submitContactForm();
-   returnToHomePage();
- }
-
-
- public boolean isContactPresent(){
-    return isElementPresent(By.name("selected[]"));
- }
-
- public void contactPreConditions (ContactData contact ){
-   if (!isContactPresent()){
-     createContactWithGroup(contact);
-   }
- }
-
-//counts quantity of Contacts
-  public int getContactCount() {
-   return  wd.findElements(By.name("selected[]")).size();
+  public void createContactWithGroup(ContactData contact) {
+    initContactCreation();
+    fillContactForm(contact, true);
+    submitContactForm();
+    returnToHomePage();
   }
 
 
+  public boolean isContactPresent() {
+    return isElementPresent(By.name("selected[]"));
+  }
+
+  public void contactPreConditions(ContactData contact) {
+    if (!isContactPresent()) {
+      createContactWithGroup(contact);
+    }
+  }
+
+  //counts quantity of Contacts
+  public int getContactCount() {
+    return wd.findElements(By.name("selected[]")).size();
+  }
 
 
+  public List<ContactData> getContactList() {
+    List<ContactData> contacts = new ArrayList<ContactData>();
+    List<WebElement> elements = wd.findElements(By.xpath("//*[@name='entry']"));
+    for (WebElement element: elements){
+      String lastName =element.findElement(By.xpath("//*[@name='entry']/td[2]")).getText();
+      String firstName = element.findElement(By.xpath("//*[@name='entry']/td[3]")).getText();
+      ContactData contact = new ContactData(lastName, firstName, null,null, null, null);
+      contacts.add(contact);
+    }
+    return contacts;
 
+
+  }
 }

@@ -2,10 +2,11 @@ package addressbook.tests.tests;
 
 import addressbook.tests.model.ContactData;
 import addressbook.tests.model.GroupData;
-import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.util.List;
 
 public class ContactDeletionTests extends TestBase {
 
@@ -30,16 +31,14 @@ public class ContactDeletionTests extends TestBase {
   }
 
 
-
-
   @Test
   public void testContactDeletionHomePage() throws Exception {
-    int before = app.getContactHelper().getContactCount();
-    app.getContactHelper().selectContact(before -1);
+    List<ContactData> before = app.getContactHelper().getContactList();
+    app.getContactHelper().selectContact(before.size() -1);
     app.getContactHelper().deleteSelectedContacts();
     app.getContactHelper().acceptAlertContactsDeletion();
-    int after = app.getContactHelper().getContactCount();
-    Assert.assertEquals(after, before-1);
+    List<ContactData> after = app.getContactHelper().getContactList();
+    Assert.assertEquals(after.size(), before.size()- 1);
   }
 
   @Test
@@ -47,29 +46,30 @@ public class ContactDeletionTests extends TestBase {
     app.getContactHelper().selectAllContacts();
     app.getContactHelper().deleteSelectedContacts();
     app.getContactHelper().acceptAlertContactsDeletion();
-    int after = app.getContactHelper().getContactCount();
-    Assert.assertEquals(after, 0);
+    //int after = app.getContactHelper().getContactCount();
+    List<ContactData> after = app.getContactHelper().getContactList();
+    Assert.assertEquals(after.size(), 0);
   }
 
   @Test
   public void testContactDeletionEditPage() throws Exception {
-    int before = app.getContactHelper().getContactCount();
-    app.getContactHelper().goToContactEditPage(before-1);
+    List<ContactData> before = app.getContactHelper().getContactList();
+    app.getContactHelper().goToContactEditPage(before.size()-1);
     app.getContactHelper().deleteContactFromEditPage();
     app.getNavigationHelper().waitForHomePageOpens();
-    int after = app.getContactHelper().getContactCount();
-    Assert.assertEquals(after, before-1);
+    List<ContactData> after = app.getContactHelper().getContactList();
+    Assert.assertEquals(after.size(), before.size()-1);
   }
 
   @Test
   public void testContactDeletionViewEditPage() throws Exception {
-    int before = app.getContactHelper().getContactCount();
-    app.getContactHelper().openContactDetailsPage(before-1);
+    List<ContactData> before = app.getContactHelper().getContactList();
+    app.getContactHelper().openContactDetailsPage(before.size()-1);
     app.getContactHelper().clickContactModifyButton();
     app.getContactHelper().deleteContactFromEditPage();
     app.getNavigationHelper().waitForHomePageOpens();
-    int after = app.getContactHelper().getContactCount();
-    Assert.assertEquals(after, before-1);
+    List<ContactData> after = app.getContactHelper().getContactList();
+    Assert.assertEquals(after.size(), before.size()-1);
   }
 
 }

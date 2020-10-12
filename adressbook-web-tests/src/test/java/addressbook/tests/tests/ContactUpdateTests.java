@@ -6,6 +6,8 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 public class ContactUpdateTests extends TestBase {
 
   @BeforeMethod
@@ -33,8 +35,8 @@ public class ContactUpdateTests extends TestBase {
 
   @Test
   public void testContactUpdate() throws Exception {
-    int before = app.getContactHelper().getContactCount();
-    app.getContactHelper().goToContactEditPage(before-1);
+    List<ContactData> before = app.getContactHelper().getContactList();
+    app.getContactHelper().goToContactEditPage(before.size() - 1);
     app.getContactHelper().fillContactForm(new ContactData(
             "New FirstName",
             "New LastNAme",
@@ -44,14 +46,14 @@ public class ContactUpdateTests extends TestBase {
             null), false);
     app.getContactHelper().submitContactUpdate();
     app.getContactHelper().returnToHomePage();
-    int after = app.getContactHelper().getContactCount();
-    Assert.assertEquals(after, before);
+    List<ContactData> after = app.getContactHelper().getContactList();
+    Assert.assertEquals(after.size(), before.size());
   }
 
   @Test
   public void testContactUpdateDetailsPage() throws Exception {
-    int before = app.getContactHelper().getContactCount();
-    app.getContactHelper().openContactDetailsPage(before-1);
+    List<ContactData> before = app.getContactHelper().getContactList();
+    app.getContactHelper().openContactDetailsPage(before.size()-1);
     app.getContactHelper().clickContactModifyButton();
     app.getContactHelper().fillContactForm(new ContactData(
             "Modify4 New FirstName",
@@ -62,8 +64,8 @@ public class ContactUpdateTests extends TestBase {
             null), false);
     app.getContactHelper().submitContactUpdate();
     app.getContactHelper().returnToHomePage();
-    int after = app.getContactHelper().getContactCount();
-    Assert.assertEquals(after, before);
+    List<ContactData> after = app.getContactHelper().getContactList();
+    Assert.assertEquals(after.size(), before.size());
 
   }
 }
