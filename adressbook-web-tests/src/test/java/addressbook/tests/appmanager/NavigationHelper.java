@@ -25,4 +25,8 @@ public class NavigationHelper extends BaseHelper {
     }
     click(By.linkText("home"));  }
 
+    public void waitForHomePageOpens(){
+    waitForPresenceOfElement(15, (By.id("maintable")));
+    }
+
 }
