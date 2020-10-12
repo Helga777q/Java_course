@@ -2,6 +2,7 @@ package addressbook.tests.tests;
 
 import addressbook.tests.model.ContactData;
 import addressbook.tests.model.GroupData;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -32,6 +33,7 @@ public class ContactUpdateTests extends TestBase {
 
   @Test
   public void testContactUpdate() throws Exception {
+    int before = app.getContactHelper().getContactCount();
     app.getContactHelper().goToContactEditPage();
     app.getContactHelper().fillContactForm(new ContactData(
             "New FirstName",
@@ -42,10 +44,13 @@ public class ContactUpdateTests extends TestBase {
             null), false);
     app.getContactHelper().submitContactUpdate();
     app.getContactHelper().returnToHomePage();
+    int after = app.getContactHelper().getContactCount();
+    Assert.assertEquals(after, before);
   }
 
   @Test
   public void testContactUpdateDetailsPage() throws Exception {
+    int before = app.getContactHelper().getContactCount();
     app.getContactHelper().openContactDetailsPage();
     app.getContactHelper().clickContactModifyButton();
     app.getContactHelper().fillContactForm(new ContactData(
@@ -57,5 +62,8 @@ public class ContactUpdateTests extends TestBase {
             null), false);
     app.getContactHelper().submitContactUpdate();
     app.getContactHelper().returnToHomePage();
+    int after = app.getContactHelper().getContactCount();
+    Assert.assertEquals(after, before);
+
   }
 }
