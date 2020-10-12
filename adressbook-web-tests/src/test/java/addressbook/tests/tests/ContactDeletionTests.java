@@ -2,6 +2,7 @@ package addressbook.tests.tests;
 
 import addressbook.tests.model.ContactData;
 import addressbook.tests.model.GroupData;
+import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -43,7 +44,6 @@ public class ContactDeletionTests extends TestBase {
 
   @Test
   public void testAllContactsDeletionHome() throws Exception {
-  //  int before = app.getContactHelper().getContactCount();
     app.getContactHelper().selectAllContacts();
     app.getContactHelper().deleteSelectedContacts();
     app.getContactHelper().acceptAlertContactsDeletion();
@@ -56,7 +56,7 @@ public class ContactDeletionTests extends TestBase {
     int before = app.getContactHelper().getContactCount();
     app.getContactHelper().goToContactEditPage(before-1);
     app.getContactHelper().deleteContactFromEditPage();
-    app.getContactHelper().waitForRedirectToHomePage(4);
+    app.getNavigationHelper().waitForHomePageOpens();
     int after = app.getContactHelper().getContactCount();
     Assert.assertEquals(after, before-1);
   }
@@ -67,7 +67,7 @@ public class ContactDeletionTests extends TestBase {
     app.getContactHelper().openContactDetailsPage(before-1);
     app.getContactHelper().clickContactModifyButton();
     app.getContactHelper().deleteContactFromEditPage();
-    app.getContactHelper().waitForRedirectToHomePage(4);
+    app.getNavigationHelper().waitForHomePageOpens();
     int after = app.getContactHelper().getContactCount();
     Assert.assertEquals(after, before-1);
   }
