@@ -34,24 +34,16 @@ public class ContactDeletionTests extends TestBase {
   @Test
   public void testContactDeletionHomePage() throws Exception {
    List<ContactData> before = app.getContactHelper().getContactList();
-   app.getContactHelper().selectContact(before.size()-1);
+   app.getContactHelper().selectContact(before.size() - 1);
    app.getContactHelper().deleteSelectedContacts();
    app.getContactHelper().acceptAlertContactsDeletion();
+   app.getNavigationHelper().waitForHomePageOpens();
    List<ContactData> after = app.getContactHelper().getContactList();
    Assert.assertEquals(after.size(), before.size()-1);
+   before.remove(before.size() - 1);
+   Assert.assertEquals(after, before);
 
   }
-
-  @Test
-  public void testAllContactsDeletionHome() throws Exception {
-    app.getContactHelper().selectAllContacts();
-    app.getContactHelper().deleteSelectedContacts();
-    app.getContactHelper().acceptAlertContactsDeletion();
-    //int after = app.getContactHelper().getContactCount();
-    List<ContactData> after = app.getContactHelper().getContactList();
-    Assert.assertEquals(after.size(), 0);
-  }
-
   @Test
   public void testContactDeletionEditPage() throws Exception {
     List<ContactData> before = app.getContactHelper().getContactList();
@@ -76,5 +68,17 @@ public class ContactDeletionTests extends TestBase {
     before.remove(before.size() - 1);
     Assert.assertEquals(after, before);
   }
+
+
+  @Test
+  public void testAllContactsDeletionHome() throws Exception {
+    app.getContactHelper().selectAllContacts();
+    app.getContactHelper().deleteSelectedContacts();
+    app.getContactHelper().acceptAlertContactsDeletion();
+    //int after = app.getContactHelper().getContactCount();
+    List<ContactData> after = app.getContactHelper().getContactList();
+    Assert.assertEquals(after.size(), 0);
+  }
+
 
 }
