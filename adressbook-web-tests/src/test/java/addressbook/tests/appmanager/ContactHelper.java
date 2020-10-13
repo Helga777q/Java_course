@@ -120,6 +120,5 @@ public class ContactHelper extends BaseHelper {
     }
     return contacts;
 
-
   }
 }

@@ -38,7 +38,8 @@ public class ContactDeletionTests extends TestBase {
     app.getContactHelper().deleteSelectedContacts();
     app.getContactHelper().acceptAlertContactsDeletion();
     List<ContactData> after = app.getContactHelper().getContactList();
-    Assert.assertEquals(after.size(), before.size()- 1);
+    Assert.assertEquals(after.size(), before.size() - 1);
+
   }
 
   @Test
@@ -59,6 +60,8 @@ public class ContactDeletionTests extends TestBase {
     app.getNavigationHelper().waitForHomePageOpens();
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size()-1);
+    before.remove(before.size() - 1);
+    Assert.assertEquals(after, before);
   }
 
   @Test
@@ -70,6 +73,8 @@ public class ContactDeletionTests extends TestBase {
     app.getNavigationHelper().waitForHomePageOpens();
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size()-1);
+    before.remove(before.size() - 1);
+    Assert.assertEquals(after, before);
   }
 
 }

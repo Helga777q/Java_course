@@ -32,6 +32,9 @@ public class ContactCreationTests extends TestBase {
             "Test"));
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size()+1);
+
+
+
   }
 
   @Test
