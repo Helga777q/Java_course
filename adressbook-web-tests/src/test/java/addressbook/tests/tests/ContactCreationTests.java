@@ -3,7 +3,6 @@ package addressbook.tests.tests;
 import addressbook.tests.model.ContactData;
 import addressbook.tests.model.GroupData;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.Comparator;
@@ -12,24 +11,13 @@ import java.util.List;
 
 public class ContactCreationTests extends TestBase {
 
-  @BeforeMethod
-  public void createGroupPreconditions(){
-    app.goTo().groupPage();
-    if (app.group().list().size()==0){
-      app.group().create(new GroupData().withName("Test"));
-      app.goTo().homePage();
-    }
-    app.goTo().homePage();
-  }
-
-
 
   @Test
   public void testContactCreationWithGroup() throws Exception {
-
+    app.group().createIfNotPresent(new GroupData().withName("Test"));
     List<ContactData> before = app.contact().list();
     ContactData contact = new ContactData()
-            .withFirstName("Monica22").withLastName("Geller").withAddress("NY, Central Perk 3").withHomePhone("+155566666").withEmail("mgeller@friends.com").withGroup("Test");
+            .withFirstName("Monica").withLastName("Geller").withAddress("NY, Central Perk 3").withHomePhone("+155566666").withEmail("mgeller@friends.com").withGroup("Test");
     app.contact().create(contact);
     List<ContactData> after = app.contact().list();
     Assert.assertEquals(after.size(), before.size() + 1);

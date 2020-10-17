@@ -76,13 +76,12 @@ public class GroupHelper extends BaseHelper {
   }
 
 
-  public void createGroupIfNotPresent(GroupData group) {
+  public void createIfNotPresent(GroupData group) {
     click(By.linkText("groups"));
     if (!isGroupPresent()) {
       create(group);
-    } else {
-      click(By.linkText("home"));
     }
+    click(By.linkText("home"));
   }
 
   public int getGroupCount() {

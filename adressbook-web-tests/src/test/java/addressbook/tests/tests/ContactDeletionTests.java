@@ -1,7 +1,6 @@
 package addressbook.tests.tests;
 
 import addressbook.tests.model.ContactData;
-import addressbook.tests.model.GroupData;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -56,7 +55,7 @@ public class ContactDeletionTests extends TestBase {
   }
 
 
-  @Test 
+  @Test
   public void testAllContactsDeletionHome() throws Exception {
     app.contact().delete(0, "homeAll");
     //int after = app.getContactHelper().getContactCount();

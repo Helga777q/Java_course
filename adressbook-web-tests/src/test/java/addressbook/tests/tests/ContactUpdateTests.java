@@ -14,14 +14,9 @@ public class ContactUpdateTests extends TestBase {
 
   @BeforeMethod
   public void contactUpdatePreconditions() {
-    if (app.contact().list().size()==0) {
-      app.goTo().groupPage();
-      if (app.group().list().size()==0) {
-        app.group().create(new GroupData()
-                .withName("Test").withHeader("test contact update5"));
-      }
+    if (app.contact().list().size()==0){
       app.contact().create(new ContactData()
-              .withFirstName("Monica").withLastName("Geller").withAddress("NY, Central Perk 3").withHomePhone("+155566666").withEmail("mgeller@friends.com").withGroup("Test")
+              .withFirstName("Monica").withLastName("Bing").withAddress("testadd").withEmail("mon@friends.com").withHomePhone("+1111").withGroup("[none]")
       );
     }
   }
