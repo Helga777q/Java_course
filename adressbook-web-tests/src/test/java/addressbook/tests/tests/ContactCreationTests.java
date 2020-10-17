@@ -8,6 +8,9 @@ import org.testng.annotations.Test;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import static org.testng.Assert.assertEquals;
 
 public class ContactCreationTests extends TestBase {
 
@@ -15,38 +18,29 @@ public class ContactCreationTests extends TestBase {
   @Test
   public void testContactCreationWithGroup() throws Exception {
     app.group().createIfNotPresent(new GroupData().withName("Test"));
-    List<ContactData> before = app.contact().list();
+    Set<ContactData> before = app.contact().all();
     ContactData contact = new ContactData()
             .withFirstName("Monica").withLastName("Geller").withAddress("NY, Central Perk 3").withHomePhone("+155566666").withEmail("mgeller@friends.com").withGroup("Test");
     app.contact().create(contact);
-    List<ContactData> after = app.contact().list();
-    Assert.assertEquals(after.size(), before.size() + 1);
-    //search of Id of the newely created contact
-    contact.withId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
+    Set<ContactData> after = app.contact().all();
+    assertEquals(after.size(), before.size() + 1); // compare the size of HashSet after the new contact is created
+    contact.withId(after.stream().mapToInt((c)-> c.getId()).max().getAsInt()); // finding the id of the contact -> max id value  of the "after" HashSet
     before.add(contact);
-    // compare of HashSets
-    Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+    assertEquals(before, after);
 
   }
 
   @Test
   public void testContactCreationWithOutGroup() {
-    List<ContactData> before = app.contact().list();
+    Set<ContactData> before = app.contact().all();
     ContactData contact = new ContactData()
             .withFirstName("Monica111").withLastName("Geller1").withAddress("NY, Central Perk 31").withHomePhone("+15556666622").withEmail("mgeller@friends.com").withGroup("[none]");
     app.contact().create(contact);
-    List<ContactData> after = app.contact().list();
-    Assert.assertEquals(after.size(), before.size() + 1);
-
-    // setting Id for the new added Contact
-    contact.withId(after.stream().max(Comparator.comparingInt(ContactData::getId)).get().getId());
+    Set<ContactData> after = app.contact().all();
+    assertEquals(after.size(), before.size() + 1); // compare the size of HashSet after the new contact is created
+    contact.withId(after.stream().mapToInt((c)-> c.getId()).max().getAsInt()); //find the id of the new created contact - > max value of the id
     before.add(contact);
-    Comparator<? super ContactData> byId = Comparator.comparingInt(ContactData::getId);
-    before.sort(byId);
-    after.sort(byId);
-    //compare of sorted Lists
-    Assert.assertEquals(before, after);
-
+    assertEquals(before, after);
   }
 
 
