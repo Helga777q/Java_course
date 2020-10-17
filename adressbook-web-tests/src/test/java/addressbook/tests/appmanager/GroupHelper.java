@@ -63,6 +63,21 @@ public class GroupHelper extends BaseHelper {
     returnToGroupPage();
   }
 
+  public void modifyGroup(int index, GroupData group) {
+    selectGroup(index);
+    initGroupUpdate();
+    fillGroupForm(group);
+    submitGroupUpdate();
+    returnToGroupPage();
+  }
+
+
+  public void deleteGroup(int index) {
+    selectGroup(index);
+    deleteSelectedGroups();
+    returnToGroupPage();
+  }
+
 
   public void createGroupIfNotPresent(GroupData group) {
     click(By.linkText("groups"));
