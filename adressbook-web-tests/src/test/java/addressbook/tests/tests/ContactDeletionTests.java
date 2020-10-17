@@ -14,14 +14,8 @@ public class ContactDeletionTests extends TestBase {
   public  void contactDeletionPreconditions(){
     //check that the contact exists, if not - create the new one
     if (app.contact().list().size()==0){
-      //check that the group exist, if not - create the new one
-      app.goTo().groupPage();
-      if(app.group().list().size()==0){
-        app.group().create(new GroupData()
-                .withName("Test").withHeader("test contact deletion"));
-      }
       app.contact().create(new ContactData()
-                      .withFirstName("Mon").withLastName("Bing").withAddress("Ny - some place 2/1").withHomePhone("+16666666").withEmail("friends@email.com").withGroup("Test")
+      .withFirstName("Monica").withLastName("Bing").withAddress("testadd").withEmail("mon@friends.com").withHomePhone("+1111").withGroup("[none]")
       );
     }
 
@@ -62,7 +56,7 @@ public class ContactDeletionTests extends TestBase {
   }
 
 
-  @Test
+  @Test 
   public void testAllContactsDeletionHome() throws Exception {
     app.contact().delete(0, "homeAll");
     //int after = app.getContactHelper().getContactCount();
