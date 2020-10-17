@@ -20,13 +20,9 @@ public class ContactDeletionTests extends TestBase {
         app.getGroupHelper().createGroup(new GroupData()
                 .withName("Test").withHeader("test contact deletion"));
       }
-      app.getContactHelper().createContactWithGroup(new ContactData(
-              "Monica1",
-              "Geller",
-              "New York, Central Perk 3",
-              "+1555567888",
-              "monica.geller@friends.com",
-              "Test"));
+      app.getContactHelper().createContactWithGroup(new ContactData()
+                      .withFirstName("Mon").withLastName("Bing").withAddress("Ny - some place 2/1").withHomePhone("+16666666").withEmail("friends@email.com").withGroup("Test")
+      );
     }
 
   }

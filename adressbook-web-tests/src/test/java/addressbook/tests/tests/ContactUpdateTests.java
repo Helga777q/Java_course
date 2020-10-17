@@ -20,13 +20,8 @@ public class ContactUpdateTests extends TestBase {
         app.getGroupHelper().createGroup(new GroupData()
                 .withName("Test").withHeader("test contact update"));
       }
-      app.getContactHelper().createContactWithGroup(new ContactData(
-              "Monica1",
-              "Geller",
-              "New York, Central Perk 3",
-              "+1555567888",
-              "monica.geller@friends.com",
-              "Test")
+      app.getContactHelper().createContactWithGroup(new ContactData()
+              .withFirstName("Monica").withLastName("Geller").withAddress("NY, Central Perk 3").withHomePhone("+155566666").withEmail("mgeller@friends.com").withGroup("Test")
       );
     }
   }
@@ -36,11 +31,8 @@ public class ContactUpdateTests extends TestBase {
   public void testContactUpdateEditPage() throws Exception {
     List<ContactData> before = app.getContactHelper().getContactList();
     int index = before.size() - 1;
-    ContactData contact = new ContactData(
-            before.get(index).getId(),
-            "New FirstName22222",
-            "New LastNAme", "new Address: London", "+1888888", "newemail@gmail.com",
-            null);
+    ContactData contact = new ContactData()
+            .withId(before.get(index).getId()).withFirstName("New first NAme").withLastName("New LastNAme").withAddress("New address").withHomePhone("+136456634").withEmail("Test@email.com");
     app.getContactHelper().modifyContact(index, contact, "edit");
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size());
@@ -54,14 +46,8 @@ public class ContactUpdateTests extends TestBase {
   public void testContactUpdateDetailsPage() throws Exception {
     List<ContactData> before = app.getContactHelper().getContactList();
     int index = before.size() - 1;
-    ContactData contact = new ContactData(
-            before.get(index).getId(),
-            "Modify4 New FirstName222222",
-            "New LastNAme",
-            "new Address: London",
-            "+1888886668",
-            "newemail2@gmail.com",
-            null);
+    ContactData contact = new ContactData()
+            .withId(before.get(index).getId()).withFirstName("New first NAme").withLastName("New LastNAme").withAddress("New address").withHomePhone("+136456634").withEmail("Test@email.com");
     app.getContactHelper().modifyContact(index, contact, "details");
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size());
