@@ -4,9 +4,6 @@ import addressbook.tests.model.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import sun.plugin2.util.BrowserType;
-
-import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,8 +96,7 @@ public class GroupHelper extends BaseHelper {
     for (WebElement element:  elements ){
       String name = element.getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      GroupData group = new GroupData (id, name, null, null);
-      groups.add(group);
+      groups.add(new GroupData().withId(id).withName(name));
     }
     return groups;
 

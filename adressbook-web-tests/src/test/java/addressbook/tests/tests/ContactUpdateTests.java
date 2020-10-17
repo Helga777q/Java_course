@@ -17,11 +17,8 @@ public class ContactUpdateTests extends TestBase {
     if (!app.getContactHelper().isContactPresent()) {
       app.getNavigationHelper().goToGroupPage();
       if (!app.getGroupHelper().isGroupPresent()) {
-        app.getGroupHelper().createGroup(new GroupData(
-                "Test",
-                "test contact update",
-                null
-        ));
+        app.getGroupHelper().createGroup(new GroupData()
+                .withName("Test").withHeader("test contact update"));
       }
       app.getContactHelper().createContactWithGroup(new ContactData(
               "Monica1",

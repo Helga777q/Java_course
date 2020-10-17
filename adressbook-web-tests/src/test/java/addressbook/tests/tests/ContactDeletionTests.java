@@ -17,11 +17,8 @@ public class ContactDeletionTests extends TestBase {
       //check that the group exist, if not - create the new one
       app.getNavigationHelper().goToGroupPage();
       if(!app.getGroupHelper().isGroupPresent()){
-        app.getGroupHelper().createGroup(new GroupData(
-                "Test",
-                "test contact deletion",
-                null
-        ));
+        app.getGroupHelper().createGroup(new GroupData()
+                .withName("Test").withHeader("test contact deletion"));
       }
       app.getContactHelper().createContactWithGroup(new ContactData(
               "Monica1",
