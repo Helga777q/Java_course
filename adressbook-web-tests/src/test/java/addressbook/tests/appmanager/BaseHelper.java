@@ -60,4 +60,5 @@ public class BaseHelper {
     //wd.manage().timeouts().implicitlyWait(waitingTime, TimeUnit.SECONDS);  // Implicit wait
   }
 
+
 }

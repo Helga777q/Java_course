@@ -23,35 +23,32 @@ public class ContactUpdateTests extends TestBase {
                 null
         ));
       }
-      app.getContactHelper().createContactWithGroup((new ContactData(
+      app.getContactHelper().createContactWithGroup(new ContactData(
               "Monica1",
               "Geller",
               "New York, Central Perk 3",
               "+1555567888",
               "monica.geller@friends.com",
               "Test")
-      ));
+      );
     }
   }
 
 
   @Test
-  public void testContactUpdate() throws Exception {
+  public void testContactUpdateEditPage() throws Exception {
     List<ContactData> before = app.getContactHelper().getContactList();
-    app.getContactHelper().goToContactEditPage(before.size() - 1);
+    int index = before.size() - 1;
     ContactData contact = new ContactData(
-            before.get(before.size()-1).getId(),
-            "New FirstName",
+            before.get(index).getId(),
+            "New FirstName22222",
             "New LastNAme", "new Address: London", "+1888888", "newemail@gmail.com",
             null);
-    app.getContactHelper().fillContactForm(contact, false);
-    app.getContactHelper().submitContactUpdate();
-    app.getContactHelper().returnToHomePage();
+    app.getContactHelper().modifyContact(index, contact, "edit");
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size());
-
     //compare of HashSets
-    before.remove(before.size()-1);
+    before.remove(index);
     before.add(contact);
     Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
   }
@@ -59,26 +56,22 @@ public class ContactUpdateTests extends TestBase {
   @Test
   public void testContactUpdateDetailsPage() throws Exception {
     List<ContactData> before = app.getContactHelper().getContactList();
-    app.getContactHelper().openContactDetailsPage(before.size()-1);
-    app.getContactHelper().clickContactModifyButton();
+    int index = before.size() - 1;
     ContactData contact = new ContactData(
-            before.get(before.size()-1).getId(),
-            "Modify4 New FirstName",
+            before.get(index).getId(),
+            "Modify4 New FirstName222222",
             "New LastNAme",
             "new Address: London",
             "+1888886668",
             "newemail2@gmail.com",
             null);
-    app.getContactHelper().fillContactForm(contact,false);
-    app.getContactHelper().submitContactUpdate();
-    app.getContactHelper().returnToHomePage();
+    app.getContactHelper().modifyContact(index, contact, "details");
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size());
-
-    before.remove(before.size()-1);
+    before.remove(index);
     before.add(contact);
     //sort lists and compare sorted lists
-    Comparator<? super ContactData> byId = (c1, c2)-> Integer.compare(c1.getId(),c2.getId());
+    Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
     before.sort(byId);
     after.sort(byId);
     Assert.assertEquals(before, after);

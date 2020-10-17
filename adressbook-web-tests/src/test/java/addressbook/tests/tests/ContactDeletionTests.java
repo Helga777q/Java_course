@@ -12,21 +12,25 @@ public class ContactDeletionTests extends TestBase {
 
   @BeforeMethod
   public  void contactDeletionPreconditions(){
-    //check if the group exists, if not created a new group, that will be used for contact creation
-    app.getGroupHelper().createGroupIfNotPresent(new GroupData(
-            "Test",
-            "test2",
-            null
-    ));
-    //check if the contact exists , if not create the new with the group from step above
-    app.getContactHelper().contactPreConditions( new ContactData(
-            "Monica1",
-            "Geller",
-            "New York, Central Perk 3",
-            "+1555567888",
-            "monica.geller@friends.com",
-            "Test")
-    );
+    //check that the contact exists, if not - create the new one
+    if (!app.getContactHelper().isContactPresent()){
+      //check that the group exist, if not - create the new one
+      app.getNavigationHelper().goToGroupPage();
+      if(!app.getGroupHelper().isGroupPresent()){
+        app.getGroupHelper().createGroup(new GroupData(
+                "Test",
+                "test contact deletion",
+                null
+        ));
+      }
+      app.getContactHelper().createContactWithGroup(new ContactData(
+              "Monica1",
+              "Geller",
+              "New York, Central Perk 3",
+              "+1555567888",
+              "monica.geller@friends.com",
+              "Test"));
+    }
 
   }
 
@@ -34,51 +38,43 @@ public class ContactDeletionTests extends TestBase {
   @Test
   public void testContactDeletionHomePage() throws Exception {
    List<ContactData> before = app.getContactHelper().getContactList();
-   app.getContactHelper().selectContact(before.size() - 1);
-   app.getContactHelper().deleteSelectedContacts();
-   app.getContactHelper().acceptAlertContactsDeletion();
-   app.getNavigationHelper().waitForHomePageOpens();
+   int index = before.size()-1;
+   app.getContactHelper().deleteContacts(index, "home");
    List<ContactData> after = app.getContactHelper().getContactList();
    Assert.assertEquals(after.size(), before.size()-1);
-   before.remove(before.size() - 1);
+   before.remove(index);
    Assert.assertEquals(after, before);
 
   }
   @Test
   public void testContactDeletionEditPage() throws Exception {
     List<ContactData> before = app.getContactHelper().getContactList();
-    app.getContactHelper().goToContactEditPage(before.size()-1);
-    app.getContactHelper().deleteContactFromEditPage();
-    app.getNavigationHelper().waitForHomePageOpens();
+    int index = before.size()-1;
+    app.getContactHelper().deleteContacts(index, "edit");
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size()-1);
-    before.remove(before.size() - 1);
+    before.remove(index);
     Assert.assertEquals(after, before);
   }
 
   @Test
   public void testContactDeletionViewEditPage() throws Exception {
     List<ContactData> before = app.getContactHelper().getContactList();
-    app.getContactHelper().openContactDetailsPage(before.size()-1);
-    app.getContactHelper().clickContactModifyButton();
-    app.getContactHelper().deleteContactFromEditPage();
-    app.getNavigationHelper().waitForHomePageOpens();
+    int index = before.size()-1;
+    app.getContactHelper().deleteContacts(index, "details");
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size()-1);
-    before.remove(before.size() - 1);
+    before.remove(index);
     Assert.assertEquals(after, before);
   }
 
 
   @Test
   public void testAllContactsDeletionHome() throws Exception {
-    app.getContactHelper().selectAllContacts();
-    app.getContactHelper().deleteSelectedContacts();
-    app.getContactHelper().acceptAlertContactsDeletion();
+    app.getContactHelper().deleteContacts(0, "homeAll");
     //int after = app.getContactHelper().getContactCount();
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), 0);
   }
-
 
 }

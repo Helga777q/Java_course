@@ -7,7 +7,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
-import javax.print.DocFlavor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +40,7 @@ public class ContactHelper extends BaseHelper {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
   }
+
 
   public void initContactCreation() {
     click(By.linkText("add new"));
@@ -108,17 +108,67 @@ public class ContactHelper extends BaseHelper {
     return wd.findElements(By.name("selected[]")).size();
   }
 
+  public void waitForHomePageOpens(){
+    waitForPresenceOfElement(15, (By.id("maintable")));
+  }
+
+
 
   public List<ContactData> getContactList() {
     List<ContactData> contacts = new ArrayList<ContactData>();
     List<WebElement> elements = wd.findElements(By.xpath("//*[@name='entry']"));
-    for (WebElement element: elements){
+    for (WebElement element : elements) {
       String firstName = element.findElement(By.cssSelector("td:nth-of-type(3)")).getText();
-      String lastName =element.findElement(By.cssSelector("td:nth-of-type(2)")).getText();
+      String lastName = element.findElement(By.cssSelector("td:nth-of-type(2)")).getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      ContactData contact = new ContactData(id, firstName,lastName, null,null, null, null);
+      ContactData contact = new ContactData(id, firstName, lastName, null, null, null, null);
       contacts.add(contact);
     }
     return contacts;
   }
+
+  public void modifyContact(int index, ContactData contact, String pageType) {
+    switch (pageType) {
+      case "edit": //edit Page
+        goToContactEditPage(index);
+        break;
+      case "details"://modify Page
+        openContactDetailsPage(index);
+        clickContactModifyButton();
+        break;
+    }
+    fillContactForm(contact, false);
+    submitContactUpdate();
+    returnToHomePage();
+  }
+
+
+  public void deleteContacts(int index, String pageType){
+
+    switch (pageType){
+      case "home":
+        selectContact(index);
+        deleteSelectedContacts();
+        acceptAlertContactsDeletion();
+        break;
+      case "edit":
+        goToContactEditPage(index);
+        deleteContactFromEditPage();
+        break;
+      case "details":
+        openContactDetailsPage(index);
+        clickContactModifyButton();
+        deleteContactFromEditPage();
+        break;
+      case "homeAll":
+        selectAllContacts();
+        deleteSelectedContacts();
+        acceptAlertContactsDeletion();
+        break;
+    }
+    waitForHomePageOpens();
+
+  }
+
+
 }

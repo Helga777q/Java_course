@@ -15,9 +15,10 @@ public class ContactCreationTests extends TestBase {
   @BeforeMethod
   public void contactCreationPreconditions() {
     app.getGroupHelper().createGroupIfNotPresent(new GroupData(
-            "Test",
+            "Test444",
             "test2-header",
             null));
+
   }
 
 
@@ -30,7 +31,8 @@ public class ContactCreationTests extends TestBase {
             "New York, Central Perk 3",
             "+1555567888",
             "monica.geller@friends.com",
-            "Test");
+            "Test444"
+            );
     app.getContactHelper().createContactWithGroup(contact);
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size() + 1);
