@@ -23,11 +23,11 @@ public class ContactHelper extends BaseHelper {
     click(By.linkText("home page"));
   }
 
-  public void submitContactForm() {
+  public void submitForm() {
     click(By.xpath("(//input[@name='submit'])[2]"));
   }
 
-  public void fillContactForm(ContactData contactData, boolean creation) {
+  public void fillForm(ContactData contactData, boolean creation) {
     type(By.name("firstname"), contactData.getFirstName());
     type(By.name("lastname"), contactData.getLastName());
     type(By.name("address"), contactData.getAddress());
@@ -42,7 +42,7 @@ public class ContactHelper extends BaseHelper {
   }
 
 
-  public void initContactCreation() {
+  public void initCreation() {
     click(By.linkText("add new"));
   }
 
@@ -50,7 +50,7 @@ public class ContactHelper extends BaseHelper {
     wd.findElements(By.name("selected[]")).get(index).click();
   }
 
-  public void deleteSelectedContacts() {
+  public void deleteSelected() {
     click(By.xpath("//input[@value='Delete']"));
   }
 
@@ -62,15 +62,15 @@ public class ContactHelper extends BaseHelper {
     click(By.id("MassCB"));
   }
 
-  public void goToContactEditPage(int index) {
+  public void goToEditPage(int index) {
     wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
   }
 
-  public void deleteContactFromEditPage() {
+  public void deleteFromEditPage() {
     click(By.xpath("(//input[@name='update'])[3]"));
   }
 
-  public void openContactDetailsPage(int index) {
+  public void goToDetailsPage(int index) {
 
     wd.findElements(By.xpath("//img[@alt='Details']")).get(index).click();
 
@@ -80,17 +80,19 @@ public class ContactHelper extends BaseHelper {
     click(By.name("modifiy"));
   }
 
-  public void submitContactUpdate() {
+  public void submitUpdate() {
     click(By.xpath("(//input[@name='update'])"));
   }
 
 
-  public void createContactWithGroup(ContactData contact) {
-    initContactCreation();
-    fillContactForm(contact, true);
-    submitContactForm();
+  public void create(ContactData contact) {
+    initCreation();
+    fillForm(contact, true);
+    submitForm();
     returnToHomePage();
   }
+
+
 
 
   public boolean isContactPresent() {
@@ -99,7 +101,7 @@ public class ContactHelper extends BaseHelper {
 
   public void contactPreConditions(ContactData contact) {
     if (!isContactPresent()) {
-      createContactWithGroup(contact);
+      create(contact);
     }
   }
 
@@ -114,7 +116,7 @@ public class ContactHelper extends BaseHelper {
 
 
 
-  public List<ContactData> getContactList() {
+  public List<ContactData> list() {
     List<ContactData> contacts = new ArrayList<ContactData>();
     List<WebElement> elements = wd.findElements(By.xpath("//*[@name='entry']"));
     for (WebElement element : elements) {
@@ -126,42 +128,42 @@ public class ContactHelper extends BaseHelper {
     return contacts;
   }
 
-  public void modifyContact(int index, ContactData contact, String pageType) {
+  public void modify(int index, ContactData contact, String pageType) {
     switch (pageType) {
       case "edit": //edit Page
-        goToContactEditPage(index);
+        goToEditPage(index);
         break;
       case "details"://modify Page
-        openContactDetailsPage(index);
+        goToDetailsPage(index);
         clickContactModifyButton();
         break;
     }
-    fillContactForm(contact, false);
-    submitContactUpdate();
+    fillForm(contact, false);
+    submitUpdate();
     returnToHomePage();
   }
 
 
-  public void deleteContacts(int index, String pageType){
+  public void delete(int index, String pageType){
 
     switch (pageType){
       case "home":
         selectContact(index);
-        deleteSelectedContacts();
+        deleteSelected();
         acceptAlertContactsDeletion();
         break;
       case "edit":
-        goToContactEditPage(index);
-        deleteContactFromEditPage();
+        goToEditPage(index);
+        deleteFromEditPage();
         break;
       case "details":
-        openContactDetailsPage(index);
+        goToDetailsPage(index);
         clickContactModifyButton();
-        deleteContactFromEditPage();
+        deleteFromEditPage();
         break;
       case "homeAll":
         selectAllContacts();
-        deleteSelectedContacts();
+        deleteSelected();
         acceptAlertContactsDeletion();
         break;
     }

@@ -14,13 +14,13 @@ public class ContactUpdateTests extends TestBase {
 
   @BeforeMethod
   public void contactUpdatePreconditions() {
-    if (!app.getContactHelper().isContactPresent()) {
-      app.getNavigationHelper().goToGroupPage();
-      if (!app.getGroupHelper().isGroupPresent()) {
-        app.getGroupHelper().createGroup(new GroupData()
-                .withName("Test").withHeader("test contact update"));
+    if (app.contact().list().size()==0) {
+      app.goTo().groupPage();
+      if (app.group().list().size()==0) {
+        app.group().create(new GroupData()
+                .withName("Test").withHeader("test contact update5"));
       }
-      app.getContactHelper().createContactWithGroup(new ContactData()
+      app.contact().create(new ContactData()
               .withFirstName("Monica").withLastName("Geller").withAddress("NY, Central Perk 3").withHomePhone("+155566666").withEmail("mgeller@friends.com").withGroup("Test")
       );
     }
@@ -29,12 +29,12 @@ public class ContactUpdateTests extends TestBase {
 
   @Test
   public void testContactUpdateEditPage() throws Exception {
-    List<ContactData> before = app.getContactHelper().getContactList();
+    List<ContactData> before = app.contact().list();
     int index = before.size() - 1;
     ContactData contact = new ContactData()
-            .withId(before.get(index).getId()).withFirstName("New first NAme").withLastName("New LastNAme").withAddress("New address").withHomePhone("+136456634").withEmail("Test@email.com");
-    app.getContactHelper().modifyContact(index, contact, "edit");
-    List<ContactData> after = app.getContactHelper().getContactList();
+            .withId(before.get(index).getId()).withFirstName("New first NAme333").withLastName("New LastNAme").withAddress("New address").withHomePhone("+136456634").withEmail("Test@email.com");
+    app.contact().modify(index, contact, "edit");
+    List<ContactData> after = app.contact().list();
     Assert.assertEquals(after.size(), before.size());
     //compare of HashSets
     before.remove(index);
@@ -44,12 +44,12 @@ public class ContactUpdateTests extends TestBase {
 
   @Test
   public void testContactUpdateDetailsPage() throws Exception {
-    List<ContactData> before = app.getContactHelper().getContactList();
+    List<ContactData> before = app.contact().list();
     int index = before.size() - 1;
     ContactData contact = new ContactData()
-            .withId(before.get(index).getId()).withFirstName("New first NAme").withLastName("New LastNAme").withAddress("New address").withHomePhone("+136456634").withEmail("Test@email.com");
-    app.getContactHelper().modifyContact(index, contact, "details");
-    List<ContactData> after = app.getContactHelper().getContactList();
+            .withId(before.get(index).getId()).withFirstName("New first NAme111").withLastName("New LastNAme").withAddress("New address").withHomePhone("+136456634").withEmail("Test@email.com");
+    app.contact().modify(index, contact, "details");
+    List<ContactData> after = app.contact().list();
     Assert.assertEquals(after.size(), before.size());
     before.remove(index);
     before.add(contact);
