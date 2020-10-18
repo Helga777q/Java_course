@@ -2,12 +2,7 @@ package addressbook.tests.tests;
 
 import addressbook.tests.model.ContactData;
 import addressbook.tests.model.GroupData;
-import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static org.testng.Assert.assertEquals;

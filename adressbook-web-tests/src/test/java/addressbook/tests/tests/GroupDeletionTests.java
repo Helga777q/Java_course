@@ -1,12 +1,8 @@
 package addressbook.tests.tests;
 
 import addressbook.tests.model.GroupData;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.security.acl.Group;
-import java.util.List;
 import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
@@ -16,7 +12,7 @@ public class GroupDeletionTests extends TestBase {
   @BeforeMethod
   public void groupDeletionPreconditions() {
     app.goTo().groupPage();
-    if (app.group().list().size()==0) {
+    if (app.group().all().size()==0) {
       app.group().create(new GroupData().withName("Test"));
     }
 

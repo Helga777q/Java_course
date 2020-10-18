@@ -51,6 +51,10 @@ public class ContactHelper extends BaseHelper {
   public void selectContact(int index) {
     wd.findElements(By.name("selected[]")).get(index).click();
   }
+  public void goToDetailsPage(int index) { wd.findElements(By.xpath("//img[@alt='Details']")).get(index).click(); }
+  public void goToEditPage(int index) {
+    wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
+  }
 
   public void deleteSelected() {
     click(By.xpath("//input[@value='Delete']"));
@@ -64,19 +68,12 @@ public class ContactHelper extends BaseHelper {
     click(By.id("MassCB"));
   }
 
-  public void goToEditPage(int index) {
-    wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
-  }
 
   public void deleteFromEditPage() {
     click(By.xpath("(//input[@name='update'])[3]"));
   }
 
-  public void goToDetailsPage(int index) {
 
-    wd.findElements(By.xpath("//img[@alt='Details']")).get(index).click();
-
-  }
 
   public void clickContactModifyButton() {
     click(By.name("modifiy"));
@@ -117,21 +114,6 @@ public class ContactHelper extends BaseHelper {
   }
 
 
-
-  public List<ContactData> list() {
-    List<ContactData> contacts = new ArrayList<ContactData>();
-    List<WebElement> elements = wd.findElements(By.xpath("//*[@name='entry']"));
-    for (WebElement element : elements) {
-      String firstName = element.findElement(By.cssSelector("td:nth-of-type(3)")).getText();
-      String lastName = element.findElement(By.cssSelector("td:nth-of-type(2)")).getText();
-      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
-    }
-    return contacts;
-  }
-
-
-
   public Set<ContactData> all() {
     Set<ContactData> contacts = new HashSet<ContactData>();
     List<WebElement> elements = wd.findElements(By.xpath("//*[@name='entry']"));
@@ -144,20 +126,6 @@ public class ContactHelper extends BaseHelper {
     return contacts;
   }
 
-  public void modify(int index, ContactData contact, String pageType) {
-    switch (pageType) {
-      case "edit": //edit Page
-        goToEditPage(index);
-        break;
-      case "details"://modify Page
-        goToDetailsPage(index);
-        clickContactModifyButton();
-        break;
-    }
-    fillForm(contact, false);
-    submitUpdate();
-    returnToHomePage();
-  }
 
 
   public void modify(ContactData contact, String pageType) {
@@ -176,32 +144,6 @@ public class ContactHelper extends BaseHelper {
   }
 
 
-  public void delete(int index, String pageType){
-
-    switch (pageType){
-      case "home":
-        selectContact(index);
-        deleteSelected();
-        acceptAlertContactsDeletion();
-        break;
-      case "edit":
-        goToEditPage(index);
-        deleteFromEditPage();
-        break;
-      case "details":
-        goToDetailsPage(index);
-        clickContactModifyButton();
-        deleteFromEditPage();
-        break;
-      case "homeAll":
-        selectAllContacts();
-        deleteSelected();
-        acceptAlertContactsDeletion();
-        break;
-    }
-    waitForHomePageOpens();
-
-  }
 
   public void deleteAll(){
     selectAllContacts();
