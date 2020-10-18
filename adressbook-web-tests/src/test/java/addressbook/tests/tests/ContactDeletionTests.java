@@ -1,11 +1,15 @@
 package addressbook.tests.tests;
 
 import addressbook.tests.model.ContactData;
+import addressbook.tests.model.GroupData;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
+import java.util.Set;
+
+import static org.testng.Assert.assertEquals;
 
 public class ContactDeletionTests extends TestBase {
 
@@ -23,44 +27,43 @@ public class ContactDeletionTests extends TestBase {
 
   @Test
   public void testContactDeletionHomePage() throws Exception {
-   List<ContactData> before = app.contact().list();
-   int index = before.size()-1;
-   app.contact().delete(index, "home");
-   List<ContactData> after = app.contact().list();
-   Assert.assertEquals(after.size(), before.size()-1);
-   before.remove(index);
-   Assert.assertEquals(after, before);
+   Set<ContactData> before = app.contact().all();
+   ContactData deletedContact = before.iterator().next();
+   app.contact().delete(deletedContact, "home");
+   Set<ContactData> after = app.contact().all();
+   assertEquals(after.size(), before.size()-1);
+   before.remove(deletedContact);
+   assertEquals(after, before);
 
   }
   @Test
   public void testContactDeletionEditPage() throws Exception {
-    List<ContactData> before = app.contact().list();
-    int index = before.size()-1;
-    app.contact().delete(index, "edit");
-    List<ContactData> after = app.contact().list();
-    Assert.assertEquals(after.size(), before.size()-1);
-    before.remove(index);
-    Assert.assertEquals(after, before);
+    Set<ContactData> before = app.contact().all();
+    ContactData deletedContact = before.iterator().next();
+    app.contact().delete(deletedContact, "edit");
+    Set<ContactData> after = app.contact().all();
+    assertEquals(after.size(), before.size()-1);
+    before.remove(deletedContact);
+    assertEquals(after, before);
   }
 
   @Test
   public void testContactDeletionViewEditPage() throws Exception {
-    List<ContactData> before = app.contact().list();
-    int index = before.size()-1;
-    app.contact().delete(index, "details");
-    List<ContactData> after = app.contact().list();
-    Assert.assertEquals(after.size(), before.size()-1);
-    before.remove(index);
-    Assert.assertEquals(after, before);
+    Set<ContactData> before = app.contact().all();
+    ContactData deletedContact = before.iterator().next();
+    app.contact().delete(deletedContact, "details");
+    Set<ContactData> after = app.contact().all();
+    assertEquals(after.size(), before.size()-1);
+    before.remove(deletedContact);
+    assertEquals(after, before);
   }
 
 
   @Test
   public void testAllContactsDeletionHome() throws Exception {
-    app.contact().delete(0, "homeAll");
-    //int after = app.getContactHelper().getContactCount();
-    List<ContactData> after = app.contact().list();
-    Assert.assertEquals(after.size(), 0);
+    app.contact().deleteAll();
+    Set<ContactData> after = app.contact().all();
+    assertEquals(after.size(), 0);
   }
 
 }

@@ -9,6 +9,9 @@ import org.testng.annotations.Test;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import static org.testng.Assert.assertEquals;
 
 public class ContactUpdateTests extends TestBase {
 
@@ -24,35 +27,30 @@ public class ContactUpdateTests extends TestBase {
 
   @Test
   public void testContactUpdateEditPage() throws Exception {
-    List<ContactData> before = app.contact().list();
-    int index = before.size() - 1;
+    Set<ContactData> before = app.contact().all();
+    ContactData updatedGroup = before.iterator().next();
     ContactData contact = new ContactData()
-            .withId(before.get(index).getId()).withFirstName("New first NAme333").withLastName("New LastNAme").withAddress("New address").withHomePhone("+136456634").withEmail("Test@email.com");
-    app.contact().modify(index, contact, "edit");
-    List<ContactData> after = app.contact().list();
-    Assert.assertEquals(after.size(), before.size());
-    //compare of HashSets
-    before.remove(index);
+            .withId(updatedGroup.getId()).withFirstName("New first NAme333").withLastName("New LastNAme").withAddress("New address").withHomePhone("+136456634").withEmail("Test@email.com");
+    app.contact().modify(contact, "edit");
+    Set<ContactData> after = app.contact().all();
+    assertEquals(after.size(), before.size());
+    before.remove(updatedGroup);
     before.add(contact);
-    Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+    assertEquals(before, after);
   }
 
   @Test
   public void testContactUpdateDetailsPage() throws Exception {
-    List<ContactData> before = app.contact().list();
-    int index = before.size() - 1;
+    Set<ContactData> before = app.contact().all();
+    ContactData updatedContact = before.iterator().next();
     ContactData contact = new ContactData()
-            .withId(before.get(index).getId()).withFirstName("New first NAme111").withLastName("New LastNAme").withAddress("New address").withHomePhone("+136456634").withEmail("Test@email.com");
-    app.contact().modify(index, contact, "details");
-    List<ContactData> after = app.contact().list();
-    Assert.assertEquals(after.size(), before.size());
-    before.remove(index);
+            .withId(updatedContact.getId()).withFirstName("New first NAme111").withLastName("New LastNAme").withAddress("New address").withHomePhone("+136456634").withEmail("Test@email.com");
+    app.contact().modify(contact, "details");
+    Set<ContactData> after = app.contact().all();
+    assertEquals(after.size(), before.size());
+    before.remove(updatedContact);
     before.add(contact);
-    //sort lists and compare sorted lists
-    Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
-    before.sort(byId);
-    after.sort(byId);
-    Assert.assertEquals(before, after);
+    assertEquals(before, after);
 
   }
 }

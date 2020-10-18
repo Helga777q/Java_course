@@ -160,6 +160,22 @@ public class ContactHelper extends BaseHelper {
   }
 
 
+  public void modify(ContactData contact, String pageType) {
+    switch (pageType) {
+      case "edit": //edit Page
+        goToEditPageById(contact.getId());
+        break;
+      case "details"://modify Page
+        goToDetailsPageById(contact.getId());
+        clickContactModifyButton();
+        break;
+    }
+    fillForm(contact, false);
+    submitUpdate();
+    returnToHomePage();
+  }
+
+
   public void delete(int index, String pageType){
 
     switch (pageType){
@@ -185,6 +201,52 @@ public class ContactHelper extends BaseHelper {
     }
     waitForHomePageOpens();
 
+  }
+
+  public void deleteAll(){
+    selectAllContacts();
+    deleteSelected();
+    acceptAlertContactsDeletion();
+    waitForHomePageOpens();
+  }
+
+
+  public void delete(ContactData contact, String pageType){
+
+    switch (pageType){
+      case "home": // home page main
+        selectContactById(contact.getId());
+        deleteSelected();
+        acceptAlertContactsDeletion();
+        break;
+      case "edit": //edit page of the contact
+        goToEditPageById(contact.getId());
+        deleteFromEditPage();
+        break;
+      case "details": //contact details page (modify)
+        goToDetailsPageById(contact.getId());
+        clickContactModifyButton();
+        deleteFromEditPage();
+        break;
+
+    }
+    waitForHomePageOpens();
+
+  }
+
+  private void goToDetailsPageById(int id) {
+    wd.findElement(By.cssSelector("a[href='view.php?id="+id+"']")).click();
+
+  }
+
+  private void goToEditPageById(int id) {
+    wd.findElement(By.cssSelector("a[href='edit.php?id="+id+"']")).click();
+
+  }
+
+  private void selectContactById(int id) {
+
+    wd.findElement(By.cssSelector("input[value='"+id+"']")).click();
   }
 
 
