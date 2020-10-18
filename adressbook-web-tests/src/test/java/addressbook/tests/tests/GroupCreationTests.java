@@ -4,7 +4,8 @@ import addressbook.tests.model.GroupData;
 import org.testng.annotations.Test;
 import java.util.Set;
 
-import static org.testng.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupCreationTests  extends TestBase {
 
@@ -15,11 +16,9 @@ public class GroupCreationTests  extends TestBase {
     GroupData group = new GroupData().withName("Test");
     app.group().create(group);
     Set<GroupData> after = app.group().all();
-    assertEquals(after.size(), before.size()+1);
-    group.withId(after.stream().mapToInt((g)-> g.getId()).max().getAsInt());     //get the id of new created group -max id of the group
-    before.add(group);
-    assertEquals(before, after);
-
+    assertThat(after.size(), equalTo(before.size()+1));
+    assertThat(after, equalTo(
+            before.add(group.withId(after.stream().mapToInt((g)-> g.getId()).max().getAsInt()))));
   }
 
 }
