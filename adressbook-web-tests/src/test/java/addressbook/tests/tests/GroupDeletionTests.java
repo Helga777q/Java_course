@@ -5,7 +5,11 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.security.acl.Group;
 import java.util.List;
+import java.util.Set;
+
+import static org.testng.Assert.assertEquals;
 
 public class GroupDeletionTests extends TestBase {
 
@@ -21,13 +25,13 @@ public class GroupDeletionTests extends TestBase {
 
   @Test
   public void testGroupDeletion() throws Exception {
-    List<GroupData> before = app.group().list();
-    int index = before.size()-1;
-    app.group().delete(index);
-    List<GroupData> after = app.group().list();
-    Assert.assertEquals(after.size(), before.size() - 1); // check size of the List before test and after test
-    before.remove(index);
-    Assert.assertEquals(before, after);
+    Set<GroupData> before = app.group().all();
+    GroupData deletedGroup = before.iterator().next(); //choose any Group from the HashSet
+    app.group().delete(deletedGroup);
+    Set<GroupData> after = app.group().all();
+    assertEquals(after.size(), before.size() - 1); // check size of the List before test and after test
+    before.remove(deletedGroup);
+    assertEquals(before, after);
   }
 
 }

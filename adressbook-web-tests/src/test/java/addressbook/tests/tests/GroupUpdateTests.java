@@ -1,11 +1,11 @@
 package addressbook.tests.tests;
 
 import addressbook.tests.model.GroupData;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
+
+import static org.testng.Assert.assertEquals;
 
 public class GroupUpdateTests extends TestBase {
 
@@ -19,19 +19,16 @@ public class GroupUpdateTests extends TestBase {
 
   @Test
   public void testGroupUpdate() {
-    List<GroupData> before = app.group().list();
-    int index= before.size()-1;
+    Set<GroupData> before = app.group().all();
+    GroupData updatedGroup = before.iterator().next(); // choose any group for Update from the HashSet
     GroupData group = new GroupData()
-            .withId(before.get(index).getId()).withName("Test-update").withHeader("test1").withFooter("test4");
-    app.group().modify(index, group);
-    List<GroupData> after = app.group().list();
-    Assert.assertEquals(after.size(), before.size());
-    before.remove(index);
+            .withId(updatedGroup.getId()).withName("Test-update").withHeader("test1").withFooter("test4");
+    app.group().modify(group);
+    Set<GroupData> after = app.group().all();
+    assertEquals(after.size(), before.size());
+    before.remove(updatedGroup);
     before.add(group);
-    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-    before.sort(byId);
-    after.sort(byId);
-    Assert.assertEquals(before, (after));
+    assertEquals(before, (after));
 
   }
 
