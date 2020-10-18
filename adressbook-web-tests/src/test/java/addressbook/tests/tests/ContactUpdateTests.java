@@ -1,11 +1,13 @@
 package addressbook.tests.tests;
 
 import addressbook.tests.model.ContactData;
+import addressbook.tests.model.Contacts;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import java.util.Set;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertEquals;
 
 public class ContactUpdateTests extends TestBase {
@@ -22,30 +24,26 @@ public class ContactUpdateTests extends TestBase {
 
   @Test
   public void testContactUpdateEditPage() throws Exception {
-    Set<ContactData> before = app.contact().all();
-    ContactData updatedGroup = before.iterator().next();
+    Contacts before = app.contact().all();
+    ContactData updatedContact = before.iterator().next();
     ContactData contact = new ContactData()
-            .withId(updatedGroup.getId()).withFirstName("New first NAme333").withLastName("New LastNAme").withAddress("New address").withHomePhone("+136456634").withEmail("Test@email.com");
+            .withId(updatedContact.getId()).withFirstName("New first NAme333").withLastName("New LastNAme").withAddress("New address").withHomePhone("+136456634").withEmail("Test@email.com");
     app.contact().modify(contact, "edit");
-    Set<ContactData> after = app.contact().all();
-    assertEquals(after.size(), before.size());
-    before.remove(updatedGroup);
-    before.add(contact);
-    assertEquals(before, after);
+    Contacts after = app.contact().all();
+    assertThat(after.size(), equalTo(before.size()));
+    assertThat(after, equalTo(before.without(updatedContact).withAdded(contact)));
   }
 
   @Test
   public void testContactUpdateDetailsPage() throws Exception {
-    Set<ContactData> before = app.contact().all();
+    Contacts before = app.contact().all();
     ContactData updatedContact = before.iterator().next();
     ContactData contact = new ContactData()
             .withId(updatedContact.getId()).withFirstName("New first NAme111").withLastName("New LastNAme").withAddress("New address").withHomePhone("+136456634").withEmail("Test@email.com");
     app.contact().modify(contact, "details");
-    Set<ContactData> after = app.contact().all();
-    assertEquals(after.size(), before.size());
-    before.remove(updatedContact);
-    before.add(contact);
-    assertEquals(before, after);
+    Contacts after = app.contact().all();
+    assertThat(after.size(), equalTo(before.size()));
+    assertThat(after, equalTo(before.without(updatedContact).withAdded(contact)));
 
   }
 }

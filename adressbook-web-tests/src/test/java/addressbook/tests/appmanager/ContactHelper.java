@@ -1,6 +1,7 @@
 package addressbook.tests.appmanager;
 
 import addressbook.tests.model.ContactData;
+import addressbook.tests.model.Contacts;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -114,8 +115,8 @@ public class ContactHelper extends BaseHelper {
   }
 
 
-  public Set<ContactData> all() {
-    Set<ContactData> contacts = new HashSet<ContactData>();
+  public Contacts all() {
+    Contacts contacts = new Contacts();
     List<WebElement> elements = wd.findElements(By.xpath("//*[@name='entry']"));
     for (WebElement element : elements) {
       String firstName = element.findElement(By.cssSelector("td:nth-of-type(3)")).getText();
