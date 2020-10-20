@@ -3,7 +3,6 @@ package addressbook.tests.tests;
 import addressbook.tests.model.GroupData;
 import addressbook.tests.model.Groups;
 import org.testng.annotations.Test;
-import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;

@@ -8,10 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ContactHelper extends BaseHelper {
 
@@ -89,10 +86,9 @@ public class ContactHelper extends BaseHelper {
     initCreation();
     fillForm(contact, true);
     submitForm();
+    contactsCache=null;
     returnToHomePage();
   }
-
-
 
 
   public boolean isContactPresent() {
@@ -115,16 +111,21 @@ public class ContactHelper extends BaseHelper {
   }
 
 
+  private Contacts contactsCache= null;
+
   public Contacts all() {
-    Contacts contacts = new Contacts();
+    if (contactsCache!=null){
+      return new Contacts(contactsCache);
+    }
+   contactsCache = new Contacts();
     List<WebElement> elements = wd.findElements(By.xpath("//*[@name='entry']"));
     for (WebElement element : elements) {
       String firstName = element.findElement(By.cssSelector("td:nth-of-type(3)")).getText();
       String lastName = element.findElement(By.cssSelector("td:nth-of-type(2)")).getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
+      contactsCache.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
     }
-    return contacts;
+    return new Contacts(contactsCache); //return the copy of the contacts list
   }
 
 
@@ -141,6 +142,7 @@ public class ContactHelper extends BaseHelper {
     }
     fillForm(contact, false);
     submitUpdate();
+    contactsCache=null;
     returnToHomePage();
   }
 
@@ -150,6 +152,7 @@ public class ContactHelper extends BaseHelper {
     selectAllContacts();
     deleteSelected();
     acceptAlertContactsDeletion();
+    contactsCache=null;
     waitForHomePageOpens();
   }
 
@@ -173,6 +176,7 @@ public class ContactHelper extends BaseHelper {
         break;
 
     }
+    contactsCache=null;
     waitForHomePageOpens();
 
   }

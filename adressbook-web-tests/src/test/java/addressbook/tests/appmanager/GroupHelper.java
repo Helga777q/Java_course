@@ -5,9 +5,8 @@ import addressbook.tests.model.Groups;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 public class GroupHelper extends BaseHelper {
 
@@ -69,6 +68,7 @@ public class GroupHelper extends BaseHelper {
     initGroupCreation();
     fillGroupForm(group);
     submitGroupCreation();
+    groupsCache=null;
     returnToGroupPage();
   }
 
@@ -77,6 +77,7 @@ public class GroupHelper extends BaseHelper {
     initGroupUpdate();
     fillGroupForm(group);
     submitGroupUpdate();
+    groupsCache=null;
     returnToGroupPage();
   }
 
@@ -84,6 +85,7 @@ public class GroupHelper extends BaseHelper {
   public void delete(GroupData group) {
     selectGroupById(group.getId());
     deleteSelectedGroups();
+    groupsCache=null;
     returnToGroupPage();
   }
 
@@ -97,16 +99,20 @@ public class GroupHelper extends BaseHelper {
   }
 
 
+private  Groups groupsCache = null;
 
   public Groups all() {
-    Groups groups = new Groups();
+    if (groupsCache != null){
+      return new Groups(groupsCache);
+    }
+    groupsCache  = new Groups();
     List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
     for (WebElement element:  elements ){
       String name = element.getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      groups.add(new GroupData().withId(id).withName(name));
+      groupsCache.add(new GroupData().withId(id).withName(name));
     }
-    return groups;
+    return new Groups(groupsCache); // return the copy of the groups lists
 
   }
 
