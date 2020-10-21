@@ -102,7 +102,7 @@ public class ContactHelper extends BaseHelper {
   }
 
   //counts quantity of Contacts
-  public int getContactCount() {
+  public int count() {
     return wd.findElements(By.name("selected[]")).size();
   }
 

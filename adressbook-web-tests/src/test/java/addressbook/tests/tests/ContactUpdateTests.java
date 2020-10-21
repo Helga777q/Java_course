@@ -4,11 +4,9 @@ import addressbook.tests.model.ContactData;
 import addressbook.tests.model.Contacts;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.testng.Assert.assertEquals;
 
 public class ContactUpdateTests extends TestBase {
 
@@ -29,8 +27,8 @@ public class ContactUpdateTests extends TestBase {
     ContactData contact = new ContactData()
             .withId(updatedContact.getId()).withFirstName("New first NAme333").withLastName("New LastNAme").withAddress("New address").withHomePhone("+136456634").withEmail("Test@email.com");
     app.contact().modify(contact, "edit");
+    assertThat(app.contact().count(), equalTo(before.size()));
     Contacts after = app.contact().all();
-    assertThat(after.size(), equalTo(before.size()));
     assertThat(after, equalTo(before.without(updatedContact).withAdded(contact)));
   }
 
@@ -41,9 +39,25 @@ public class ContactUpdateTests extends TestBase {
     ContactData contact = new ContactData()
             .withId(updatedContact.getId()).withFirstName("New first NAme111").withLastName("New LastNAme").withAddress("New address").withHomePhone("+136456634").withEmail("Test@email.com");
     app.contact().modify(contact, "details");
+    assertThat(app.contact().count(), equalTo(before.size()));
     Contacts after = app.contact().all();
-    assertThat(after.size(), equalTo(before.size()));
     assertThat(after, equalTo(before.without(updatedContact).withAdded(contact)));
 
   }
+
+  @Test
+  public void testNegativeContactUpdateEditPage() throws Exception {
+    Contacts before = app.contact().all();
+    ContactData updatedContact = before.iterator().next();
+    ContactData contact = new ContactData()
+            .withId(updatedContact.getId()).withFirstName("Test'").withLastName("New LastNAme").withAddress("New address").withHomePhone("+136456634").withEmail("Test@email.com");
+    app.contact().modify(contact, "edit");
+    assertThat(app.contact().count(), equalTo(before.size()));
+    Contacts after = app.contact().all();
+    assertThat(after, equalTo(before));
+  }
+
+
+
+
 }

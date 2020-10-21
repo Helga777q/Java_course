@@ -29,8 +29,8 @@ public class ContactDeletionTests extends TestBase {
    Contacts before = app.contact().all();
    ContactData deletedContact = before.iterator().next();
    app.contact().delete(deletedContact, "home");
+   assertThat(app.contact().count(), equalTo(before.size()-1));
    Contacts after = app.contact().all();
-   assertThat(after.size(), equalTo(before.size()-1));
    assertThat(after, equalTo(before.without(deletedContact)));
 
 
@@ -40,8 +40,8 @@ public class ContactDeletionTests extends TestBase {
     Contacts before = app.contact().all();
     ContactData deletedContact = before.iterator().next();
     app.contact().delete(deletedContact, "edit");
+    assertThat(app.contact().count(), equalTo(before.size()-1));
     Contacts after = app.contact().all();
-    assertThat(after.size(), equalTo(before.size()-1));
     assertThat(after, equalTo(before.without(deletedContact)));
   }
 
@@ -50,8 +50,8 @@ public class ContactDeletionTests extends TestBase {
     Contacts before = app.contact().all();
     ContactData deletedContact = before.iterator().next();
     app.contact().delete(deletedContact, "details");
+    assertThat(app.contact().count(), equalTo(before.size()-1));
     Contacts after = app.contact().all();
-    assertThat(after.size(), equalTo(before.size()-1));
     assertThat(after, equalTo(before.without(deletedContact)));
   }
 
@@ -59,8 +59,7 @@ public class ContactDeletionTests extends TestBase {
   @Test (enabled = false)
   public void testAllContactsDeletionHome() throws Exception {
     app.contact().deleteAll();
-    Contacts after = app.contact().all();
-    assertThat(after.size(), equalTo(0));
+    assertThat(app.contact().count(), equalTo(0));
   }
 
 }
