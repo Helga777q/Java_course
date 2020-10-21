@@ -17,7 +17,7 @@ public class ContactDeletionTests extends TestBase {
     //check that the contact exists, if not - create the new one
     if (app.contact().all().size()==0){
       app.contact().create(new ContactData()
-      .withFirstName("Monica").withLastName("Bing").withAddress("testadd").withEmail("mon@friends.com").withHomePhone("+1111").withGroup("[none]")
+      .withFirstName("Monica").withLastName("Bing").withAddress("testadd").withEmail("mon@friends.com").withHome("+1111").withGroup("[none]")
       );
     }
 

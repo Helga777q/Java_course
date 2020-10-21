@@ -16,7 +16,7 @@ public class ContactCreationTests extends TestBase {
     app.group().createIfNotPresent(new GroupData().withName("Test"));
     Contacts before = app.contact().all();
     ContactData contact = new ContactData()
-            .withFirstName("Monica").withLastName("Geller").withAddress("NY, Central Perk 3").withHomePhone("+155566666").withEmail("mgeller@friends.com").withGroup("Test");
+            .withFirstName("Monica").withLastName("Geller").withHome("+155566666").withEmail("mgeller@friends.com").withGroup("Test");
     app.contact().create(contact);
     assertThat(app.contact().count(), equalTo(before.size()+1));
     Contacts after = app.contact().all();
@@ -29,7 +29,7 @@ public class ContactCreationTests extends TestBase {
   public void testContactCreationWithOutGroup() {
     Contacts before = app.contact().all();
     ContactData contact = new ContactData()
-            .withFirstName("Monica111").withLastName("Geller1").withAddress("NY, Central Perk 31").withHomePhone("+15556666622").withEmail("mgeller@friends.com").withGroup("[none]");
+            .withFirstName("Monica111").withLastName("Geller1").withAddress("NY, Central Perk 31").withAddress("NY, Central Perk 3").withHome("+155566666").withGroup("[none]");
     app.contact().create(contact);
     assertThat(app.contact().count(), equalTo(before.size()+1));
     Contacts after = app.contact().all();
@@ -41,11 +41,12 @@ public class ContactCreationTests extends TestBase {
   public void testNegativeContactCreationWithOutGroup() {
     Contacts before = app.contact().all();
     ContactData contact = new ContactData()
-            .withFirstName("Monica'").withLastName("Geller1").withAddress("NY, Central Perk 31").withHomePhone("+15556666622").withEmail("mgeller@friends.com").withGroup("[none]");
+            .withFirstName("Monica'").withLastName("Geller1").withAddress("NY, Central Perk 31").withHome("+15556666622").withEmail("mgeller@friends.com").withGroup("[none]");
     app.contact().create(contact);
     assertThat(app.contact().count(), equalTo(before.size()));
     Contacts after = app.contact().all();
     assertThat(after, equalTo(before));
   }
+
 
 }
