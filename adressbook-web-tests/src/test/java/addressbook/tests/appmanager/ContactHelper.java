@@ -125,10 +125,10 @@ public class ContactHelper extends BaseHelper {
       String firstName = element.findElement(By.cssSelector("td:nth-of-type(3)")).getText();
       String lastName = element.findElement(By.cssSelector("td:nth-of-type(2)")).getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      String[] phones = element.findElement(By.cssSelector("td:nth-of-type(6)"))
-              .getText().split("\n");
-      contactsCache.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName)
-              .withHome(phones[0]).withMobile(phones[1]).withWork(phones[2]));
+      String allPhones =  element.findElement(By.cssSelector("td:nth-of-type(6)")).getText();
+      //String[] phones = element.findElement(By.cssSelector("td:nth-of-type(6)")).getText().split("\n");
+      contactsCache.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName).withAllPhones(allPhones));
+              //.withHome(phones[0]).withMobile(phones[1]).withWork(phones[2]));
     }
     return new Contacts(contactsCache); //return the copy of the contacts list
   }
