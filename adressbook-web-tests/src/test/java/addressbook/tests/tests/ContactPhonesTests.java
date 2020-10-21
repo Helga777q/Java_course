@@ -1,6 +1,7 @@
 package addressbook.tests.tests;
 
 import addressbook.tests.model.ContactData;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
@@ -13,6 +14,16 @@ public class ContactPhonesTests extends TestBase{
 
 
   // add preconditions - contact is created
+  @BeforeMethod
+  public  void contactDeletionPreconditions(){
+    //check that the contact exists, if not - create the new one
+    if (app.contact().all().size()==0){
+      app.contact().create(new ContactData()
+              .withFirstName("Monica").withLastName("Bing").withAddress("testadd").withGroup("[none]")
+              .withHome("+1111").withMobile("+1-333-(22)"));
+    }
+
+  }
 
 
   @Test
