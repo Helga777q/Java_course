@@ -29,13 +29,13 @@ public class ContactEmailsTests extends TestBase {
     app.goTo().homePage();
     ContactData contact = app.contact().all().iterator().next();
     ContactData contactInfoFromEditPage = app.contact().infoFromEditForm(contact);
-    //String forDebug = mergeEmails(contactInfoFromEditPage);
     assertThat(contact.getAllEmails(), equalTo(mergeEmails(contactInfoFromEditPage)));
   }
 
   public String mergeEmails(ContactData contact){
     return Arrays.asList(contact.getEmail(), contact.getEmail2(), contact.getEmail3())
-            .stream().filter((s)->!s.equals("")).collect(Collectors.joining("\n"));
+            .stream().filter((s)->!s.equals(""))
+            .collect(Collectors.joining("\n"));
   }
 
 }

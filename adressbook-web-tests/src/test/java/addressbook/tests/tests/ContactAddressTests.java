@@ -27,8 +27,13 @@ public class ContactAddressTests extends TestBase {
     app.goTo().homePage();
     ContactData contact = app.contact().all().iterator().next(); //choose any contact from the table
     ContactData contactInfoFromEditPage = app.contact().infoFromEditForm(contact);
-    assertThat(contact.getAddress(), equalTo(contactInfoFromEditPage.getAddress()));
+    assertThat(contact.getAddress(), equalTo(cleaned(contactInfoFromEditPage.getAddress())));
+  }
 
+//trim address before and after, replaces >2 spaces with single space
+  public String cleaned(String address){
+
+    return address.trim().replaceAll(" +", " ");
   }
 
 
