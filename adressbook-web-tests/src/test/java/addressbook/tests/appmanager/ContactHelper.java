@@ -128,8 +128,12 @@ public class ContactHelper extends BaseHelper {
       String allPhones =  element.findElement(By.cssSelector("td:nth-of-type(6)")).getText();
       String address = element.findElement(By.cssSelector("td:nth-of-type(4)")).getText();
       //String[] phones = element.findElement(By.cssSelector("td:nth-of-type(6)")).getText().split("\n");
+      //String[] emails = element.findElement(By.cssSelector("td:nth-of-type(5)")).getText().split("\n");
+      String allEmails = element.findElement(By.cssSelector("td:nth-of-type(5)")).getText();
       contactsCache.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName)
-              .withAllPhones(allPhones).withAddress(address));
+              .withAllPhones(allPhones).withAddress(address)
+              .withAllEmails(allEmails));
+              //.withEmail(emails[0]).withEmailSecond(emails[1]).withEmailThird(emails[2])
               //.withHome(phones[0]).withMobile(phones[1]).withWork(phones[2]));
     }
     return new Contacts(contactsCache); //return the copy of the contacts list
@@ -213,9 +217,13 @@ public class ContactHelper extends BaseHelper {
     String home = wd.findElement(By.name("home")).getAttribute("value");
     String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
     String work = wd.findElement(By.name("work")).getAttribute("value");
+    String email = wd.findElement(By.name("email")).getAttribute("value");
+    String email2 = wd.findElement(By.name("email2")).getAttribute("value");
+    String email3 = wd.findElement(By.name("email3")).getAttribute("value");
     wd.navigate().back();
     return new ContactData().withId(contact.getId()).withFirstName(firstName).withLastName(lastName).withAddress(address)
-            .withHome(home).withMobile(mobile).withWork(work);
+            .withHome(home).withMobile(mobile).withWork(work)
+            .withEmail(email).withEmailSecond(email2).withEmailThird(email3);
   }
 
 }
