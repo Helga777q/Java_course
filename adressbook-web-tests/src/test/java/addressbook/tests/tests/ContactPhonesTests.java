@@ -15,7 +15,7 @@ public class ContactPhonesTests extends TestBase{
 
   // add preconditions - contact is created
   @BeforeMethod
-  public  void contactDeletionPreconditions(){
+  public  void contactCheckPhonesPreconditions(){
     //check that the contact exists, if not - create the new one
     if (app.contact().all().size()==0){
       app.contact().create(new ContactData()
