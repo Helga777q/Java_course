@@ -5,6 +5,7 @@ import addressbook.tests.model.Contacts;
 import addressbook.tests.model.GroupData;
 import org.testng.annotations.Test;
 
+import java.io.File;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -15,8 +16,10 @@ public class ContactCreationTests extends TestBase {
   public void testContactCreationWithGroup() throws Exception {
     app.group().createIfNotPresent(new GroupData().withName("Test"));
     Contacts before = app.contact().all();
+    File photo= new File("src/test/resources/test_photo.bmp");
     ContactData contact = new ContactData()
-            .withFirstName("Monica").withLastName("Geller").withHome("+155566666").withEmail("mgeller@friends.com").withGroup("Test");
+            .withFirstName("Monica with Photo").withLastName("Geller").withHome("+155566666").withEmail("mgeller@friends.com").withGroup("Test")
+            .withPhoto(photo);
     app.contact().create(contact);
     assertThat(app.contact().count(), equalTo(before.size()+1));
     Contacts after = app.contact().all();
@@ -24,6 +27,18 @@ public class ContactCreationTests extends TestBase {
             before.withAdded(contact.withId(after.stream().mapToInt((c)-> c.getId()).max().getAsInt()))));
 
   }
+
+
+
+  @Test
+  public void testCurDir(){
+    File  currDir = new File(".");
+    File photo = new File("src/test/resources/test_photo.bmp");
+    System.out.println(photo.getAbsolutePath());
+    System.out.println(photo.exists());
+
+  }
+
 
   @Test
   public void testContactCreationWithOutGroup() {
@@ -47,6 +62,9 @@ public class ContactCreationTests extends TestBase {
     Contacts after = app.contact().all();
     assertThat(after, equalTo(before));
   }
+
+
+
 
 
 }
