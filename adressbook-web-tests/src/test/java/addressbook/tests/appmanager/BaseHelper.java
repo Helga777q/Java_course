@@ -5,6 +5,7 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
@@ -31,6 +32,13 @@ public class BaseHelper {
         wd.findElement(locator).clear();
         wd.findElement(locator).sendKeys(text);
       }
+    }
+  }
+
+
+  public void selectFromDropDown(By locator, String text){
+    if (text !=null){
+      new Select(wd.findElement(locator)).selectByVisibleText(text);
     }
   }
 

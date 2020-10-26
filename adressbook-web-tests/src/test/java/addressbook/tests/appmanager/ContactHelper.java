@@ -5,7 +5,6 @@ import addressbook.tests.model.Contacts;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import java.util.List;
@@ -37,7 +36,8 @@ public class ContactHelper extends BaseHelper {
     type(By.name("email"), contactData.getEmail());
     attach(By.name("photo"), contactData.getPhoto());
     if (creation) {
-      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+        //new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+      selectFromDropDown(By.name("new_group"), contactData.getGroup());
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
