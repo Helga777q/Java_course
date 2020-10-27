@@ -3,13 +3,39 @@ package addressbook.tests.tests;
 import addressbook.tests.model.ContactData;
 import addressbook.tests.model.Contacts;
 import addressbook.tests.model.GroupData;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTests extends TestBase {
 
 
+  @DataProvider
+  public Iterator<Object[]> validContacts(){
+    List<Object[]> list = new ArrayList<Object[]>();
+    list.add(new Object[]{new ContactData().withFirstName("First Name").withLastName("LastName").withEmail("test@mail.com")});
+    list.add(new Object[]{new ContactData().withFirstName("First Name2").withLastName("LastName2").withEmail("test2@mail.com")});
+    list.add(new Object[]{new ContactData().withFirstName("First Name3").withLastName("LastName3").withEmail("test3@mail.com")});
+    return list.iterator();
+  }
+
+
+
+  @Test (dataProvider = "validContacts")
+  public void testContactCreationWithOutGroup(ContactData contact) {
+    Contacts before = app.contact().all();
+    app.contact().create(contact);
+    assertThat(app.contact().count(), equalTo(before.size()+1));
+    Contacts after = app.contact().all();
+    assertThat(after, equalTo(
+            before.withAdded(contact.withId(after.stream().mapToInt(ContactData::getId).max().getAsInt()))));
+  }
 
 
 
@@ -30,17 +56,7 @@ public class ContactCreationTests extends TestBase {
 
 
 
-  @Test
-  public void testContactCreationWithOutGroup() {
-    Contacts before = app.contact().all();
-    ContactData contact = new ContactData()
-            .withFirstName("Monica111 without group").withLastName("Geller1").withAddress("NY, Central Perk 31").withAddress("NY, Central Perk 3").withHome("+155566666");
-    app.contact().create(contact);
-    assertThat(app.contact().count(), equalTo(before.size()+1));
-    Contacts after = app.contact().all();
-    assertThat(after, equalTo(
-            before.withAdded(contact.withId(after.stream().mapToInt(ContactData::getId).max().getAsInt()))));
-  }
+
 
 @Test
   public void testNegativeContactCreationWithOutGroup() {

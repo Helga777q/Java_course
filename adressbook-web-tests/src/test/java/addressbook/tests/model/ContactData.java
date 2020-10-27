@@ -164,13 +164,26 @@ public class ContactData {
     return birthYear;
   }
 
-
   @Override
   public String toString() {
     return "ContactData{" +
-            "id='" + id + '\'' +
+            "id=" + id +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
+            ", address='" + address + '\'' +
+            ", home='" + home + '\'' +
+            ", mobile='" + mobile + '\'' +
+            ", work='" + work + '\'' +
+            ", email='" + email + '\'' +
+            ", email2='" + email2 + '\'' +
+            ", email3='" + email3 + '\'' +
+            ", group='" + group + '\'' +
+            ", allPhones='" + allPhones + '\'' +
+            ", allEmails='" + allEmails + '\'' +
+            ", photo=" + photo +
+            ", birthDate='" + birthDate + '\'' +
+            ", birthMonth='" + birthMonth + '\'' +
+            ", birthYear='" + birthYear + '\'' +
             '}';
   }
 
