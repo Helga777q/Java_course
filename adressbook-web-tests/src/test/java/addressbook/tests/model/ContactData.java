@@ -18,7 +18,30 @@ public class ContactData {
   private String allPhones;
   private String allEmails;
   private File photo;
+  private String birthDate;
+  private String birthMonth;
+  private String birthYear;
 
+
+
+  public ContactData withBirthDate(String birthDate) {
+    this.birthDate = birthDate;
+    return this;
+  }
+
+
+
+  public ContactData withBirthMonth(String birthMonth) {
+    this.birthMonth = birthMonth;
+    return this;
+  }
+
+
+
+  public ContactData withBirthYear(String birthYear) {
+    this.birthYear = birthYear;
+    return this;
+  }
 
   public ContactData withPhoto(File photo) {
     this.photo = photo;
@@ -128,6 +151,19 @@ public class ContactData {
   public String getAllEmails() { return allEmails; }
 
   public File getPhoto() { return photo; }
+
+  public String getBirthMonth() {
+    return birthMonth;
+  }
+
+  public String getBirthDate() {
+    return birthDate;
+  }
+
+  public String getBirthYear() {
+    return birthYear;
+  }
+
 
   @Override
   public String toString() {

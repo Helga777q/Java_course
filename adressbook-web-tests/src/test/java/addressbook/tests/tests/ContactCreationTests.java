@@ -10,12 +10,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ContactCreationTests extends TestBase {
 
 
+
+
+
   @Test
   public void testContactCreationWithGroup() throws Exception {
     app.group().createIfNotPresent(new GroupData().withName("Test"));
     Contacts before = app.contact().all();
     ContactData contact = new ContactData()
-            .withFirstName("Monica with Photo 1").withLastName("Geller").withHome("+155566666").withEmail("mgeller@friends.com").withGroup("Test");
+            .withFirstName("Monica with BirthDate").withLastName("Geller").withHome("+155566666").withEmail("mgeller@friends.com").withGroup("Test")
+            .withBirthDate("12").withBirthMonth("January").withBirthYear("1990");
     app.contact().create(contact);
     assertThat(app.contact().count(), equalTo(before.size()+1));
     Contacts after = app.contact().all();
@@ -30,7 +34,7 @@ public class ContactCreationTests extends TestBase {
   public void testContactCreationWithOutGroup() {
     Contacts before = app.contact().all();
     ContactData contact = new ContactData()
-            .withFirstName("Monica111 without group").withLastName("Geller1").withAddress("NY, Central Perk 31").withAddress("NY, Central Perk 3").withHome("+155566666").withGroup("Test");
+            .withFirstName("Monica111 without group").withLastName("Geller1").withAddress("NY, Central Perk 31").withAddress("NY, Central Perk 3").withHome("+155566666");
     app.contact().create(contact);
     assertThat(app.contact().count(), equalTo(before.size()+1));
     Contacts after = app.contact().all();

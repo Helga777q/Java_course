@@ -35,6 +35,10 @@ public class ContactHelper extends BaseHelper {
     type(By.name("work"), contactData.getWork());
     type(By.name("email"), contactData.getEmail());
     attach(By.name("photo"), contactData.getPhoto());
+    selectFromDropDown(By.name("bday"), contactData.getBirthDate());
+    selectFromDropDown(By.name("bmonth"), contactData.getBirthMonth());
+    type(By.name("byear"), contactData.getBirthYear());
+
     if (creation) {
         //new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
       selectFromDropDown(By.name("new_group"), contactData.getGroup());
