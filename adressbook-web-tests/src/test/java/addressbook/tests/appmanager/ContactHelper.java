@@ -97,6 +97,10 @@ public class ContactHelper extends BaseHelper {
     return isElementPresent(By.name("selected[]"));
   }
 
+  public boolean isPhotoPresent(){
+    return isElementPresent(By.tagName("img"));
+  }
+
   public void contactPreConditions(ContactData contact) {
     if (!isContactPresent()) {
       create(contact);
@@ -192,18 +196,18 @@ public class ContactHelper extends BaseHelper {
 
   }
 
-  private void goToDetailsPageById(int id) {
+  public void goToDetailsPageById(int id) {
     wd.findElement(By.cssSelector("a[href='view.php?id="+id+"']")).click();
 
   }
 
-  private void goToEditPageById(int id) {
+  public void goToEditPageById(int id) {
    // wd.findElement(By.cssSelector("a[href='edit.php?id="+id+"']")).click();
     wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();
 
   }
 
-  private void selectContactById(int id) {
+  public void selectContactById(int id) {
 
     wd.findElement(By.cssSelector("input[value='"+id+"']")).click();
   }
