@@ -4,6 +4,8 @@ import addressbook.tests.model.ContactData;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.thoughtworks.xstream.XStream;
 
 import java.io.File;
@@ -46,15 +48,26 @@ public class ContactDataGenerator {
       saveAsCsv(contacts, new File(file));
     } else if (format.equals("xml")){
       saveAsXml(contacts, new File(file));
-   // } else if (format.equals("json")){
-  //    saveAsJson(contacts, new File(file));
+   } else if (format.equals("json")){
+      saveAsJson(contacts, new File(file));
     } else{
       System.out.println("Wrong file format "+format);
     }
 
+  }
+
+  //create file in Json format
+  private void saveAsJson(List<ContactData> contacts, File file) throws IOException {
+    Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
+    String json = gson.toJson(contacts);
+    Writer writer =new FileWriter(file);
+    writer.write(json);
+    writer.close();
 
   }
 
+
+  //create file in XML format
   private void saveAsXml(List<ContactData> contacts, File file) throws IOException {
     XStream xstream = new XStream();
     xstream.processAnnotations(ContactData.class);
@@ -64,6 +77,8 @@ public class ContactDataGenerator {
     writer.close();
   }
 
+
+  //create file in Csv format
   private  void saveAsCsv(List<ContactData> contacts, File file) throws IOException {
     Writer writer = new FileWriter(file);
     for (ContactData contact: contacts){
@@ -75,6 +90,8 @@ public class ContactDataGenerator {
     writer.close();
   }
 
+
+  //generate data for the file
   private  List<ContactData> generateContacts(int count) {
     List<ContactData> contacts = new ArrayList<ContactData>();
     String[] months= new String[] {"January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December" };

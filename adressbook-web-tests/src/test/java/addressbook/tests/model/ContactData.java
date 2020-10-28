@@ -1,7 +1,9 @@
 package addressbook.tests.model;
 
+import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import net.bytebuddy.build.ToStringPlugin;
 
 import java.io.File;
 import java.util.Objects;
@@ -10,12 +12,17 @@ import java.util.Objects;
 public class ContactData {
   @XStreamOmitField
   private  int id;
+  @Expose
   private  String firstName;
+  @Expose
   private  String lastName;
+  @Expose
   private  String address;
   private  String home;
+  @Expose
   private String mobile;
   private String work;
+  @Expose
   private  String email;
   private String email2;
   private String email3;
@@ -23,8 +30,11 @@ public class ContactData {
   private String allPhones;
   private String allEmails;
   private File photo;
+  @Expose
   private String birthDate;
+  @Expose
   private String birthMonth;
+  @Expose
   private String birthYear;
 
 

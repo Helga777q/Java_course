@@ -2,7 +2,8 @@ package addressbook.tests.tests;
 
 import addressbook.tests.model.ContactData;
 import addressbook.tests.model.Contacts;
-import addressbook.tests.model.GroupData;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -46,7 +47,7 @@ public class ContactCreationTests extends TestBase {
 
 
   @DataProvider
-  public Iterator<Object[]> contactsXmlFile() throws IOException {
+  public Iterator<Object[]> contactsFromXmlFile() throws IOException {
     BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.xml")));
     String xml="";
     String line = reader.readLine();
@@ -62,7 +63,7 @@ public class ContactCreationTests extends TestBase {
 
 
 
-  @Test(dataProvider = "contactsXmlFile")
+  @Test(dataProvider = "contactsFromXmlFile")
   public void testContactCreationXMmlFile(ContactData contact)  {
     Contacts before = app.contact().all();
     app.contact().create(contact);
@@ -73,7 +74,22 @@ public class ContactCreationTests extends TestBase {
   }
 
 
-  @Test
+  @DataProvider
+  public Iterator<Object[]> contactsFromJsonFile() throws IOException {
+    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.json")));
+    String json="";
+    String line = reader.readLine();
+    while(line !=null){
+      json += line;
+      line = reader.readLine();
+    }
+    Gson gson  = new Gson();
+    List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>(){}.getType());
+    return contacts.stream().map((c)->new Object[]{c}).collect(Collectors.toList()).iterator();
+  }
+
+
+  @Test(dataProvider = "contactsFromJsonFile")
   public void testContactCreationJsonFile(ContactData contact)  {
     Contacts before = app.contact().all();
     app.contact().create(contact);

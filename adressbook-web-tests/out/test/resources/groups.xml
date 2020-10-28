@@ -24,4 +24,14 @@
     <header>Header 4</header>
     <footer>Footer 4</footer>
   </group>
+  <group>
+    <name>Test 5</name>
+    <header>Header 5</header>
+    <footer>Footer 5</footer>
+  </group>
+  <group>
+    <name>Test 6</name>
+    <header>Header 6</header>
+    <footer>Footer 6</footer>
+  </group>
 </list>

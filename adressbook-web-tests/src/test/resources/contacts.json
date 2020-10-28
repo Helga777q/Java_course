@@ -1,0 +1,32 @@
+[
+  {
+    "firstName": "First Name 0",
+    "lastName": "Last Name 0",
+    "address": "Some new address, str 0",
+    "mobile": "+1-5555-0",
+    "email": "testemail0@gmail.com",
+    "birthDate": "19",
+    "birthMonth": "January",
+    "birthYear": "1982"
+  },
+  {
+    "firstName": "First Name 1",
+    "lastName": "Last Name 1",
+    "address": "Some new address, str 1",
+    "mobile": "+1-5555-1",
+    "email": "testemail1@gmail.com",
+    "birthDate": "13",
+    "birthMonth": "July",
+    "birthYear": "1961"
+  },
+  {
+    "firstName": "First Name 2",
+    "lastName": "Last Name 2",
+    "address": "Some new address, str 2",
+    "mobile": "+1-5555-2",
+    "email": "testemail2@gmail.com",
+    "birthDate": "11",
+    "birthMonth": "December",
+    "birthYear": "1980"
+  }
+]
