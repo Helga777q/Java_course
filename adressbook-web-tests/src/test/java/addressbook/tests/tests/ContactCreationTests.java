@@ -3,6 +3,7 @@ package addressbook.tests.tests;
 import addressbook.tests.model.ContactData;
 import addressbook.tests.model.Contacts;
 import addressbook.tests.model.GroupData;
+import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -10,6 +11,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -43,21 +45,45 @@ public class ContactCreationTests extends TestBase {
 
 
 
-  
-  @Test
-  public void testContactCreationWithGroup() throws Exception {
-    app.group().createIfNotPresent(new GroupData().withName("Test"));
+  @DataProvider
+  public Iterator<Object[]> contactsXmlFile() throws IOException {
+    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.xml")));
+    String xml="";
+    String line = reader.readLine();
+    while(line !=null){
+      xml += line;
+      line = reader.readLine();
+    }
+    XStream xstream = new XStream();
+    xstream.processAnnotations(ContactData.class);
+    List<ContactData> contacts = (List<ContactData>)xstream.fromXML(xml);
+    return contacts.stream().map((c)->new Object[]{c}).collect(Collectors.toList()).iterator();
+  }
+
+
+
+  @Test(dataProvider = "contactsXmlFile")
+  public void testContactCreationXMmlFile(ContactData contact)  {
     Contacts before = app.contact().all();
-    ContactData contact = new ContactData()
-            .withFirstName("Monica with BirthDate").withLastName("Geller").withHome("+155566666").withEmail("mgeller@friends.com").withGroup("Test")
-            .withBirthDate("12").withBirthMonth("January").withBirthYear("1990");
     app.contact().create(contact);
     assertThat(app.contact().count(), equalTo(before.size()+1));
     Contacts after = app.contact().all();
     assertThat(after, equalTo(
             before.withAdded(contact.withId(after.stream().mapToInt((c)-> c.getId()).max().getAsInt()))));
-
   }
+
+
+  @Test
+  public void testContactCreationJsonFile(ContactData contact)  {
+    Contacts before = app.contact().all();
+    app.contact().create(contact);
+    assertThat(app.contact().count(), equalTo(before.size()+1));
+    Contacts after = app.contact().all();
+    assertThat(after, equalTo(
+            before.withAdded(contact.withId(after.stream().mapToInt((c)-> c.getId()).max().getAsInt()))));
+  }
+
+
 
 
 

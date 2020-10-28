@@ -1,0 +1,32 @@
+<list>
+  <contact>
+    <firstName>First Name 0</firstName>
+    <lastName>Last Name 0</lastName>
+    <address>Some new address, str 0</address>
+    <mobile>+1-5555-0</mobile>
+    <email>testemail0@gmail.com</email>
+    <birthDate>10</birthDate>
+    <birthMonth>February</birthMonth>
+    <birthYear>1960</birthYear>
+  </contact>
+  <contact>
+    <firstName>First Name 1</firstName>
+    <lastName>Last Name 1</lastName>
+    <address>Some new address, str 1</address>
+    <mobile>+1-5555-1</mobile>
+    <email>testemail1@gmail.com</email>
+    <birthDate>17</birthDate>
+    <birthMonth>April</birthMonth>
+    <birthYear>1975</birthYear>
+  </contact>
+  <contact>
+    <firstName>First Name 2</firstName>
+    <lastName>Last Name 2</lastName>
+    <address>Some new address, str 2</address>
+    <mobile>+1-5555-2</mobile>
+    <email>testemail2@gmail.com</email>
+    <birthDate>7</birthDate>
+    <birthMonth>November</birthMonth>
+    <birthYear>1994</birthYear>
+  </contact>
+</list>
