@@ -6,6 +6,7 @@ import addressbook.tests.model.GroupData;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,30 +16,34 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTests extends TestBase {
 
-
+// Test Data for the tests - from CSV file
   @DataProvider
-  public Iterator<Object[]> validContacts(){
+  public Iterator<Object[]> validContacts() throws IOException {
     List<Object[]> list = new ArrayList<Object[]>();
-    list.add(new Object[]{new ContactData().withFirstName("First Name").withLastName("LastName").withEmail("test@mail.com")});
-    list.add(new Object[]{new ContactData().withFirstName("First Name2").withLastName("LastName2").withEmail("test2@mail.com")});
-    list.add(new Object[]{new ContactData().withFirstName("First Name3").withLastName("LastName3").withEmail("test3@mail.com")});
+    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.csv")));
+    String line = reader.readLine();
+    while(line !=null){
+      String[] split = line.split(";");
+      list.add(new Object[] {new ContactData().withFirstName(split[0]).withLastName(split[1]).withAddress(split[2]).withEmail(split[3]).withMobile(split[4])
+              .withBirthDate(split[5]).withBirthMonth(split[6]).withBirthYear(split[7])});
+      line = reader.readLine();
+    }
     return list.iterator();
   }
-
 
 
   @Test (dataProvider = "validContacts")
   public void testContactCreationWithOutGroup(ContactData contact) {
     Contacts before = app.contact().all();
     app.contact().create(contact);
-    assertThat(app.contact().count(), equalTo(before.size()+1));
+    assertThat(app.contact().count(), equalTo(before.size()+1)); 
     Contacts after = app.contact().all();
-    assertThat(after, equalTo(
-            before.withAdded(contact.withId(after.stream().mapToInt(ContactData::getId).max().getAsInt()))));
+    assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt(ContactData::getId).max().getAsInt()))));
   }
 
 
 
+  
   @Test
   public void testContactCreationWithGroup() throws Exception {
     app.group().createIfNotPresent(new GroupData().withName("Test"));
@@ -57,12 +62,20 @@ public class ContactCreationTests extends TestBase {
 
 
 
+// TestData for negative tests created via DataProvider
+  @DataProvider
+  public Iterator<Object[]> negativeContactsTest(){
+    List<Object[]> list = new ArrayList<Object[]>();
+    list.add(new Object[]{new ContactData().withFirstName("First Name'").withLastName("LastName").withEmail("test@mail.com")});
+    list.add(new Object[]{new ContactData().withFirstName("First Name2'").withLastName("LastName2").withEmail("test2@mail.com")});
+    list.add(new Object[]{new ContactData().withFirstName("First Name3'").withLastName("LastName3'").withEmail("test3@mail.com")});
+    return list.iterator();
+  }
 
-@Test
-  public void testNegativeContactCreationWithOutGroup() {
+
+@Test (dataProvider = "negativeContactsTest")
+  public void testNegativeContactCreationWithOutGroup(ContactData contact) {
     Contacts before = app.contact().all();
-    ContactData contact = new ContactData()
-            .withFirstName("Monica'").withLastName("Geller1").withAddress("NY, Central Perk 31").withHome("+15556666622").withEmail("mgeller@friends.com").withGroup("[none]");
     app.contact().create(contact);
     assertThat(app.contact().count(), equalTo(before.size()));
     Contacts after = app.contact().all();
