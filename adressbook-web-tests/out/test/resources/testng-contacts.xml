@@ -3,11 +3,26 @@
 <suite name="Suite1" verbose="1" >
     <test name="Contacts">
         <classes>
+
             <class name="addressbook.tests.tests.ContactCreationTests">
             <methods>
-                <include name="testContactCreationWithOutGroup"/>
+                <include name="testContactCreationJsonFile"/>
             </methods>
             </class>
+            <class name="addressbook.tests.tests.ContactUpdateTests">
+            <methods>
+                <exclude name="testNegativeContactUpdateEditPage"/>
+            </methods>
+        </class>
+            <class name="addressbook.tests.tests.ContactDeletionTests">
+                <methods>
+                    <include name="testContactDeletionHomePage"/>
+                    <include name="testAllContactsDeletionHome"/>
+                </methods>
+            </class>
+            <class name="addressbook.tests.tests.ContactEmailsTests"/>
+            <class name="addressbook.tests.tests.ContactPhonesTests"/>
+            <class name="addressbook.tests.tests.ContactPhotoTests"/>
         </classes>
     </test>
 </suite>

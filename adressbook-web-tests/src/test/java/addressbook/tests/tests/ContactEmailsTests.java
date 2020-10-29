@@ -17,9 +17,9 @@ public class ContactEmailsTests extends TestBase {
     //check that the contact exists, if not - create the new one
     if (app.contact().all().size() == 0) {
       app.contact().create(new ContactData()
-              .withFirstName("Monica").withLastName("Bing").withGroup("[none]")
+              .withFirstName("Monica -test emails").withLastName("Bing")
               .withAddress("Test Address")
-              .withEmail("test@mail.com").withEmailThird("test3@com"));
+              .withEmail("test@mail.com").withEmailSecond("test4@mail.com").withEmailThird("test.ttt@gmail.com"));
     }
 
   }

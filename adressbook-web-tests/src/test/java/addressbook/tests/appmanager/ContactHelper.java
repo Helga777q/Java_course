@@ -34,6 +34,8 @@ public class ContactHelper extends BaseHelper {
     type(By.name("mobile"), contactData.getMobile());
     type(By.name("work"), contactData.getWork());
     type(By.name("email"), contactData.getEmail());
+    type(By.name("email2"), contactData.getEmail2());
+    type(By.name("email3"), contactData.getEmail3());
     attach(By.name("photo"), contactData.getPhoto());
     selectFromDropDown(By.name("bday"), contactData.getBirthDate());
     selectFromDropDown(By.name("bmonth"), contactData.getBirthMonth());

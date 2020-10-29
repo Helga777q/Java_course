@@ -115,13 +115,13 @@ public class ContactData {
     return this;
   }
 
-  public ContactData withEmailSecond(String email) {
-    this.email2 = email;
+  public ContactData withEmailSecond(String email2) {
+    this.email2 = email2;
     return this;
   }
 
-  public ContactData withEmailThird(String email) {
-    this.email3 = email;
+  public ContactData withEmailThird(String email3) {
+    this.email3 = email3;
     return this;
   }
 

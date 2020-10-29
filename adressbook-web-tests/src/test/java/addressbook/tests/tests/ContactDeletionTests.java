@@ -56,7 +56,7 @@ public class ContactDeletionTests extends TestBase {
   }
 
 
-  @Test (enabled = false)
+  @Test
   public void testAllContactsDeletionHome() throws Exception {
     app.contact().deleteAll();
     assertThat(app.contact().count(), equalTo(0));

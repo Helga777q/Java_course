@@ -44,7 +44,7 @@ public class ApplicationManager {
       wd = new EdgeDriver();
     }
 
-    wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+    wd.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
     wd.get(properties.getProperty("web.baseUrl"));
     groupHelper = new GroupHelper(wd);
     contactHelper = new ContactHelper(wd);

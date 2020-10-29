@@ -4,7 +4,11 @@
     <test name="Groups" >
         <classes>
             <class name="addressbook.tests.tests.GroupCreationTests" />
-            <class name="addressbook.tests.tests.GroupUpdateTests" />
+            <class name="addressbook.tests.tests.GroupUpdateTests">
+                <methods>
+                    <include name="testGroupUpdate"/>
+                </methods>
+            </class>
             <class name="addressbook.tests.tests.GroupDeletionTests" />
         </classes>
     </test>
