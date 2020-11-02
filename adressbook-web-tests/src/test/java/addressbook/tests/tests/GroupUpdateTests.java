@@ -13,13 +13,46 @@ public class GroupUpdateTests extends TestBase {
 
   @BeforeMethod
   public void groupUpdatePreconditions() {
-    app.goTo().groupPage();
-    if (app.group().all().size()==0) {
+    if (app.group().all().size()==0){
+      app.goTo().groupPage();
       app.group().create(new GroupData().withName("Test"));
     }
   }
 
+
   @Test
+  public void testGroupUpdateDb() {
+    Groups before = app.db().groups();
+    GroupData updatedGroup = before.iterator().next(); // choose any group for Update from the DB list of groups
+    GroupData group = new GroupData()
+            .withId(updatedGroup.getId()).withName("Test-update").withHeader("test1").withFooter("test4");
+    app.goTo().groupPage();
+    app.group().modify(group);
+    assertThat(app.group().count(), equalTo(before.size()));
+    Groups after = app.db().groups();
+    assertThat(after, equalTo(before.without(updatedGroup).withAdded(group)));
+  }
+
+@Test
+  public void testNegativeGroupUpdateDb() {
+    Groups before = app.db().groups();
+    GroupData updatedGroup = before.iterator().next(); // choose any group for Update from the DB list
+    GroupData group = new GroupData()
+            .withId(updatedGroup.getId()).withName("Test'").withHeader("test1").withFooter("test4");
+    app.goTo().groupPage();
+    app.group().modify(group);
+    assertThat(app.group().count(), equalTo(before.size()));
+    Groups after = app.group().all();
+    assertThat(after, equalTo(before));
+  }
+
+
+
+
+
+
+
+  @Test(enabled = false)
   public void testGroupUpdate() {
     Groups before = app.group().all();
     GroupData updatedGroup = before.iterator().next(); // choose any group for Update from the HashSet
@@ -31,7 +64,7 @@ public class GroupUpdateTests extends TestBase {
     assertThat(after, equalTo(before.without(updatedGroup).withAdded(group)));
   }
 
-  @Test
+  @Test(enabled = false)
   public void testNegativeGroupUpdate() {
     Groups before = app.group().all();
     GroupData updatedGroup = before.iterator().next(); // choose any group for Update from the HashSet
