@@ -3,44 +3,92 @@ package addressbook.tests.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
-import net.bytebuddy.build.ToStringPlugin;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 import java.util.Objects;
 
 @XStreamAlias("contact")
+
+@Entity
+@Table(name = "addressbook")
 public class ContactData {
   @XStreamOmitField
+  @Id
+  @Column(name= "id")
   private  int id;
+
   @Expose
+  @Column(name="firstname")
   private  String firstName;
+
   @Expose
+  @Column(name="lastname")
   private  String lastName;
+
   @Expose
+  @Column(name="address")
+  @Type(type = "text")
   private  String address;
+
+  @Column(name="home")
+  @Type(type = "text")
   private  String home;
+
   @Expose
+  @Column(name="mobile")
+  @Type(type = "text")
   private String mobile;
+
+  @Column(name="work")
+  @Type(type = "text")
   private String work;
+
   @Expose
+
+  @Column(name="email")
+  @Type(type = "text")
   private  String email;
+
+  @Column(name="email2")
+  @Type(type = "text")
   private String email2;
+
+  @Column(name="email3")
+  @Type(type = "text")
   private String email3;
+
+  @Transient
   private  String group;
+
+  @Transient
   private String allPhones;
+
+  @Transient
   private String allEmails;
-  private File photo;
+
+  @Column(name="photo")
+  @Type(type = "text")
+  private String photo;
+
   @Expose
+  @Column(name="bday", columnDefinition = "tinyint")
   private String birthDate;
+
   @Expose
+  @Column(name="bmonth")
   private String birthMonth;
+
   @Expose
+  @Column(name="byear")
   private String birthYear;
 
 
 
+
   public ContactData withBirthDate(String birthDate) {
-    this.birthDate = birthDate;
+    this.birthDate= birthDate;
     return this;
   }
 
@@ -59,7 +107,7 @@ public class ContactData {
   }
 
   public ContactData withPhoto(File photo) {
-    this.photo = photo;
+    this.photo = photo.getPath();
     return this;
   }
 
@@ -165,7 +213,13 @@ public class ContactData {
 
   public String getAllEmails() { return allEmails; }
 
-  public File getPhoto() { return photo; }
+  public File getPhoto() {
+    if (photo != null) {
+      return new File(photo);
+    } else {
+      return null;
+    }
+  }
 
   public String getBirthMonth() {
     return birthMonth;
@@ -193,9 +247,7 @@ public class ContactData {
             ", email2='" + email2 + '\'' +
             ", email3='" + email3 + '\'' +
             ", group='" + group + '\'' +
-            ", allPhones='" + allPhones + '\'' +
-            ", allEmails='" + allEmails + '\'' +
-            ", photo=" + photo +
+            ", photo='" + photo + '\'' +
             ", birthDate='" + birthDate + '\'' +
             ", birthMonth='" + birthMonth + '\'' +
             ", birthYear='" + birthYear + '\'' +
