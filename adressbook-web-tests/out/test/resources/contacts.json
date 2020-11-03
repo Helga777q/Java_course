@@ -3,100 +3,56 @@
     "firstName": "First Name 0",
     "lastName": "Last Name 0",
     "address": "Some new address, str 0",
+    "home": "+1-666-0",
     "mobile": "+1-5555-0",
+    "work": "+1-5777-0",
     "email": "testemail0@gmail.com",
-    "birthDate": "26",
-    "birthMonth": "July",
-    "birthYear": "1998"
+    "email2": "test20@gmail.com",
+    "email3": "test30@gmail.com",
+    "birthDate": "14",
+    "birthMonth": "October",
+    "birthYear": "1963"
   },
   {
     "firstName": "First Name 1",
     "lastName": "Last Name 1",
     "address": "Some new address, str 1",
+    "home": "+1-666-1",
     "mobile": "+1-5555-1",
+    "work": "+1-5777-1",
     "email": "testemail1@gmail.com",
-    "birthDate": "22",
-    "birthMonth": "August",
-    "birthYear": "1980"
+    "email2": "test21@gmail.com",
+    "email3": "test31@gmail.com",
+    "birthDate": "20",
+    "birthMonth": "July",
+    "birthYear": "1966"
   },
   {
     "firstName": "First Name 2",
     "lastName": "Last Name 2",
     "address": "Some new address, str 2",
+    "home": "+1-666-2",
     "mobile": "+1-5555-2",
+    "work": "+1-5777-2",
     "email": "testemail2@gmail.com",
-    "birthDate": "3",
-    "birthMonth": "June",
-    "birthYear": "1984"
+    "email2": "test22@gmail.com",
+    "email3": "test32@gmail.com",
+    "birthDate": "8",
+    "birthMonth": "September",
+    "birthYear": "1994"
   },
   {
     "firstName": "First Name 3",
     "lastName": "Last Name 3",
     "address": "Some new address, str 3",
+    "home": "+1-666-3",
     "mobile": "+1-5555-3",
+    "work": "+1-5777-3",
     "email": "testemail3@gmail.com",
-    "birthDate": "4",
-    "birthMonth": "May",
-    "birthYear": "1962"
-  },
-  {
-    "firstName": "First Name 4",
-    "lastName": "Last Name 4",
-    "address": "Some new address, str 4",
-    "mobile": "+1-5555-4",
-    "email": "testemail4@gmail.com",
-    "birthDate": "19",
-    "birthMonth": "February",
-    "birthYear": "1970"
-  },
-  {
-    "firstName": "First Name 5",
-    "lastName": "Last Name 5",
-    "address": "Some new address, str 5",
-    "mobile": "+1-5555-5",
-    "email": "testemail5@gmail.com",
-    "birthDate": "6",
-    "birthMonth": "May",
-    "birthYear": "1992"
-  },
-  {
-    "firstName": "First Name 6",
-    "lastName": "Last Name 6",
-    "address": "Some new address, str 6",
-    "mobile": "+1-5555-6",
-    "email": "testemail6@gmail.com",
-    "birthDate": "11",
+    "email2": "test23@gmail.com",
+    "email3": "test33@gmail.com",
+    "birthDate": "12",
     "birthMonth": "October",
     "birthYear": "1981"
-  },
-  {
-    "firstName": "First Name 7",
-    "lastName": "Last Name 7",
-    "address": "Some new address, str 7",
-    "mobile": "+1-5555-7",
-    "email": "testemail7@gmail.com",
-    "birthDate": "2",
-    "birthMonth": "April",
-    "birthYear": "1962"
-  },
-  {
-    "firstName": "First Name 8",
-    "lastName": "Last Name 8",
-    "address": "Some new address, str 8",
-    "mobile": "+1-5555-8",
-    "email": "testemail8@gmail.com",
-    "birthDate": "14",
-    "birthMonth": "October",
-    "birthYear": "1995"
-  },
-  {
-    "firstName": "First Name 9",
-    "lastName": "Last Name 9",
-    "address": "Some new address, str 9",
-    "mobile": "+1-5555-9",
-    "email": "testemail9@gmail.com",
-    "birthDate": "17",
-    "birthMonth": "August",
-    "birthYear": "1979"
   }
 ]

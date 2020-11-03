@@ -32,6 +32,7 @@ public class ContactData {
   @Type(type = "text")
   private  String address;
 
+  @Expose
   @Column(name="home")
   @Type(type = "text")
   private  String home;
@@ -41,35 +42,40 @@ public class ContactData {
   @Type(type = "text")
   private String mobile;
 
+  @Expose
   @Column(name="work")
   @Type(type = "text")
   private String work;
 
   @Expose
-
   @Column(name="email")
   @Type(type = "text")
   private  String email;
 
+  @Expose
   @Column(name="email2")
   @Type(type = "text")
   private String email2;
 
+  @Expose
   @Column(name="email3")
   @Type(type = "text")
   private String email3;
 
   @Transient
+  @XStreamOmitField
   private  String group;
 
   @Transient
+  @XStreamOmitField
   private String allPhones;
 
   @Transient
+  @XStreamOmitField
   private String allEmails;
 
-  @Column(name="photo")
-  @Type(type = "text")
+  @Transient
+  @XStreamOmitField
   private String photo;
 
   @Expose
@@ -261,11 +267,21 @@ public class ContactData {
     ContactData that = (ContactData) o;
     return id == that.id &&
             Objects.equals(firstName, that.firstName) &&
-            Objects.equals(lastName, that.lastName);
+            Objects.equals(lastName, that.lastName) &&
+            Objects.equals(address, that.address) &&
+            Objects.equals(home, that.home) &&
+            Objects.equals(mobile, that.mobile) &&
+            Objects.equals(work, that.work) &&
+            Objects.equals(email, that.email) &&
+            Objects.equals(email2, that.email2) &&
+            Objects.equals(email3, that.email3) &&
+            Objects.equals(birthDate, that.birthDate) &&
+            Objects.equals(birthMonth, that.birthMonth) &&
+            Objects.equals(birthYear, that.birthYear);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, firstName, lastName);
+    return Objects.hash(id, firstName, lastName, address, home, mobile, work, email, email2, email3, birthDate, birthMonth, birthYear);
   }
 }

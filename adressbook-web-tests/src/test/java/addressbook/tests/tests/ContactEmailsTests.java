@@ -14,8 +14,8 @@ public class ContactEmailsTests extends TestBase {
 
   @BeforeMethod
   public void contactCheckEmailsPreconditions() {
-    //check that the contact exists, if not - create the new one
-    if (app.contact().all().size() == 0) {
+    //check that the contact exists in DB, if not - create the new one
+    if (app.db().contacts().size() == 0) {
       app.contact().create(new ContactData()
               .withFirstName("Monica -test emails").withLastName("Bing")
               .withAddress("Test Address")

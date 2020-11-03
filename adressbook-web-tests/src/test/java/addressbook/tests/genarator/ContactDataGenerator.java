@@ -82,8 +82,10 @@ public class ContactDataGenerator {
   private  void saveAsCsv(List<ContactData> contacts, File file) throws IOException {
    try( Writer writer = new FileWriter(file)) {
      for (ContactData contact : contacts) {
-       writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s\n",
-               contact.getFirstName(), contact.getLastName(), contact.getAddress(), contact.getEmail(), contact.getMobile(),
+       writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s\n",
+               contact.getFirstName(), contact.getLastName(), contact.getAddress(),
+               contact.getEmail(), contact.getEmail2(), contact.getEmail3(),
+               contact.getMobile(),contact.getHome(),contact.getWork(),
                contact.getBirthDate(), contact.getBirthMonth(), contact.getBirthYear()
        ));
      }
@@ -101,7 +103,11 @@ public class ContactDataGenerator {
               .withLastName(String.format("Last Name %s", i))
               .withAddress(String.format("Some new address, str %s", i))
               .withEmail(String.format("testemail"+i+"@gmail.com"))
+              .withEmailSecond(String.format("test2"+i+"@gmail.com"))
+              .withEmailThird(String.format("test3"+i+"@gmail.com"))
               .withMobile(String.format("+1-5555-%s", i))
+              .withHome(String.format("+1-666-%s", i))
+              .withWork(String.format("+1-5777-%s", i))
               .withBirthDate((String.valueOf((int)(Math.random()*27)+1)))
               .withBirthMonth(months[(int)(Math.random()* months.length)])
               .withBirthYear(String.valueOf((int)(Math.random() * (2000 - 1960 + 1)+1960)))

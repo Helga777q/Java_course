@@ -16,11 +16,11 @@ public class ContactPhonesTests extends TestBase{
   // add preconditions - contact is created
   @BeforeMethod
   public  void contactCheckPhonesPreconditions(){
-    //check that the contact exists, if not - create the new one
-    if (app.contact().all().size()==0){
+    //check that the contact exists in DB, if not - create the new one
+    if (app.db().contacts().size()==0){
       app.contact().create(new ContactData()
               .withFirstName("Monica").withLastName("Bing").withAddress("testadd").withGroup("[none]")
-              .withHome("+1111").withMobile("+1-333-(22)"));
+              .withHome("+1111").withMobile("+1-333-(22)").withWork("+1(77)-444"));
     }
 
   }

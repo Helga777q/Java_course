@@ -12,11 +12,11 @@ public class ContactAddressTests extends TestBase {
   // add preconditions - contact is created
   @BeforeMethod
   public  void contactCheckAddressPreconditions(){
-    //check that the contact exists, if not - create the new one
-    if (app.contact().all().size()==0){
+    //check that the contact exists in DB, if not - create the new one
+    if (app.db().contacts().size()==0){
       app.contact().create(new ContactData()
               .withFirstName("Monica").withLastName("Bing").withGroup("[none]")
-              .withAddress("Test Address"));
+              .withAddress("Test Address vvvvvv  vcxvcxv vxc vc xvccvvvv                  vvvvvv"));
     }
 
   }
@@ -32,7 +32,6 @@ public class ContactAddressTests extends TestBase {
 
 //trim address before and after, replaces >2 spaces with single space
   public String cleaned(String address){
-
     return address.trim().replaceAll(" +", " ");
   }
 
