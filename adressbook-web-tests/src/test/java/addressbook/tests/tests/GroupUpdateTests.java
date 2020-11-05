@@ -15,7 +15,7 @@ public class GroupUpdateTests extends TestBase {
   public void groupUpdatePreconditions() {
     if (app.group().all().size()==0){
       app.goTo().groupPage();
-      app.group().create(new GroupData().withName("Test"));
+      app.group().create(new GroupData().withName("Test").withHeader("test for update").withFooter("test for update"));
     }
   }
 
@@ -31,9 +31,12 @@ public class GroupUpdateTests extends TestBase {
     assertThat(app.group().count(), equalTo(before.size()));
     Groups after = app.db().groups();
     assertThat(after, equalTo(before.without(updatedGroup).withAdded(group)));
+    verifyGroupListInUI();
   }
 
-@Test
+
+
+  @Test
   public void testNegativeGroupUpdateDb() {
     Groups before = app.db().groups();
     GroupData updatedGroup = before.iterator().next(); // choose any group for Update from the DB list
