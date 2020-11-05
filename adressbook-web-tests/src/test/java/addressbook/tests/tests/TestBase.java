@@ -1,6 +1,8 @@
 package addressbook.tests.tests;
 
 import addressbook.tests.appmanager.ApplicationManager;
+import addressbook.tests.model.ContactData;
+import addressbook.tests.model.Contacts;
 import addressbook.tests.model.GroupData;
 import addressbook.tests.model.Groups;
 import org.openqa.selenium.remote.BrowserType;
@@ -61,6 +63,14 @@ public class TestBase {
     }
   }
 
-
+  public void verifyContactListUI() {
+    if (Boolean.getBoolean("verifyUI")) {
+      Contacts dbContacts = app.db().contacts();
+      Contacts uiContacts = app.contact().all();
+      assertThat(uiContacts, equalTo(dbContacts.stream()
+              .map((c) -> new ContactData().withId(c.getId()).withFirstName(c.getFirstName()).withLastName(c.getLastName()).withAddress(c.getAddress()))
+              .collect(Collectors.toSet())));
+    }
+  }
 
 }

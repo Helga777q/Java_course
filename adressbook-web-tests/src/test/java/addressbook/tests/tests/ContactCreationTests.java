@@ -37,17 +37,6 @@ public class ContactCreationTests extends TestBase {
     }
   }
 
-
-  @Test(dataProvider = "contactFromCsvFile")
-  public void testContactCreationWithCsvFile(ContactData contact) {
-    Contacts before = app.db().contacts();
-    app.contact().create(contact);
-    assertThat(app.contact().count(), equalTo(before.size() + 1));
-    Contacts after = app.db().contacts();
-    assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt(ContactData::getId).max().getAsInt()))));
-  }
-
-
   @DataProvider
   public Iterator<Object[]> contactsFromXmlFile() throws IOException {
     try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.xml")))) {
@@ -63,18 +52,6 @@ public class ContactCreationTests extends TestBase {
       return contacts.stream().map((c) -> new Object[]{c}).collect(Collectors.toList()).iterator();
     }
   }
-
-
-  @Test(dataProvider = "contactsFromXmlFile")
-  public void testContactCreationXMmlFile(ContactData contact) {
-    Contacts before = app.db().contacts();
-    app.contact().create(contact);
-    assertThat(app.contact().count(), equalTo(before.size() + 1));
-    Contacts after = app.db().contacts();
-    assertThat(after, equalTo(
-            before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
-  }
-
 
   @DataProvider
   public Iterator<Object[]> contactsFromJsonFile() throws IOException {
@@ -93,6 +70,35 @@ public class ContactCreationTests extends TestBase {
   }
 
 
+
+
+  @Test(dataProvider = "contactFromCsvFile")
+  public void testContactCreationWithCsvFile(ContactData contact) {
+    Contacts before = app.db().contacts();
+    app.contact().create(contact);
+    assertThat(app.contact().count(), equalTo(before.size() + 1));
+    Contacts after = app.db().contacts();
+    assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt(ContactData::getId).max().getAsInt()))));
+    verifyContactListUI();
+  }
+
+
+
+
+  @Test(dataProvider = "contactsFromXmlFile")
+  public void testContactCreationXMmlFile(ContactData contact) {
+    Contacts before = app.db().contacts();
+    app.contact().create(contact);
+    assertThat(app.contact().count(), equalTo(before.size() + 1));
+    Contacts after = app.db().contacts();
+    assertThat(after, equalTo(
+            before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
+    verifyContactListUI();
+  }
+
+
+
+
   @Test(dataProvider = "contactsFromJsonFile")
   public void testContactCreationJsonFile(ContactData contact) {
     Contacts before = app.db().contacts();
@@ -101,6 +107,7 @@ public class ContactCreationTests extends TestBase {
     Contacts after = app.db().contacts();
     assertThat(after, equalTo(
             before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
+    verifyContactListUI();
   }
 
 
@@ -128,6 +135,7 @@ public class ContactCreationTests extends TestBase {
     assertThat(app.contact().count(), equalTo(before.size()));
     Contacts after = app.db().contacts();
     assertThat(after, equalTo(before));
+    verifyContactListUI();
   }
 
 
