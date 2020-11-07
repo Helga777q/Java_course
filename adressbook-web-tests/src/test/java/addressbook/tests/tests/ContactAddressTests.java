@@ -15,7 +15,7 @@ public class ContactAddressTests extends TestBase {
     //check that the contact exists in DB, if not - create the new one
     if (app.db().contacts().size()==0){
       app.contact().create(new ContactData()
-              .withFirstName("Monica").withLastName("Bing").withGroup("[none]")
+              .withFirstName("Monica").withLastName("Bing")
               .withAddress("Test Address vvvvvv  vcxvcxv vxc vc xvccvvvv                  vvvvvv"));
     }
 

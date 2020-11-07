@@ -2,6 +2,8 @@ package addressbook.tests.tests;
 
 import addressbook.tests.model.ContactData;
 import addressbook.tests.model.Contacts;
+import addressbook.tests.model.GroupData;
+import addressbook.tests.model.Groups;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
@@ -129,12 +131,36 @@ public class ContactCreationTests extends TestBase {
 
 
   @Test(dataProvider = "negativeContactsTest")
-  public void testNegativeContactCreationWithOutGroup(ContactData contact) {
+  public void testNegativeContactCreation(ContactData contact) {
     Contacts before = app.db().contacts();
     app.contact().create(contact);
     assertThat(app.contact().count(), equalTo(before.size()));
     Contacts after = app.db().contacts();
     assertThat(after, equalTo(before));
+    verifyContactListUI();
+  }
+
+
+  //creation of contact with Group
+  @Test
+  public void testContactCreationWithGroup(){
+    if (app.db().groups().size()==0){
+      app.goTo().groupPage();
+      app.group().create(new GroupData().withName("test").withHeader("test").withFooter("test"));
+      app.goTo().homePage();
+    }
+    Groups groupsListDb = app.db().groups();
+    ContactData newContact = new ContactData().withFirstName("First Name with group").withLastName("LastName").withAddress("test address")
+            .withEmail("test@mail.com").withEmailSecond("test").withEmailThird("yyy@mail.com")
+            .withMobile("+111").withHome("+22222").withWork("+222222")
+            .withBirthDate("12").withBirthMonth("December").withBirthYear("1990")
+            .inGroup(groupsListDb.iterator().next());
+    Contacts before = app.db().contacts();
+    app.contact().create(newContact);
+    assertThat(app.contact().count(), equalTo(before.size() + 1));
+    Contacts after = app.db().contacts();
+    assertThat(after, equalTo(
+            before.withAdded(newContact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
     verifyContactListUI();
   }
 

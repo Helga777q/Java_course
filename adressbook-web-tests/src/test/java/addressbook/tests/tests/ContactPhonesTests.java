@@ -19,7 +19,7 @@ public class ContactPhonesTests extends TestBase{
     //check that the contact exists in DB, if not - create the new one
     if (app.db().contacts().size()==0){
       app.contact().create(new ContactData()
-              .withFirstName("Monica").withLastName("Bing").withAddress("testadd").withGroup("[none]")
+              .withFirstName("Monica").withLastName("Bing").withAddress("testadd")
               .withHome("+1111").withMobile("+1-333-(22)").withWork("+1(77)-444"));
     }
 

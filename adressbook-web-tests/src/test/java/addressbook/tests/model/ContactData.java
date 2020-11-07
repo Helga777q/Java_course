@@ -7,7 +7,9 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @XStreamAlias("contact")
 
@@ -16,55 +18,55 @@ import java.util.Objects;
 public class ContactData {
   @XStreamOmitField
   @Id
-  @Column(name= "id")
-  private  int id;
+  @Column(name = "id")
+  private int id;
 
   @Expose
-  @Column(name="firstname")
-  private  String firstName;
+  @Column(name = "firstname")
+  private String firstName;
 
   @Expose
-  @Column(name="lastname")
-  private  String lastName;
+  @Column(name = "lastname")
+  private String lastName;
 
   @Expose
-  @Column(name="address")
+  @Column(name = "address")
   @Type(type = "text")
-  private  String address;
+  private String address;
 
   @Expose
-  @Column(name="home")
+  @Column(name = "home")
   @Type(type = "text")
-  private  String home;
+  private String home;
 
   @Expose
-  @Column(name="mobile")
+  @Column(name = "mobile")
   @Type(type = "text")
   private String mobile;
 
   @Expose
-  @Column(name="work")
+  @Column(name = "work")
   @Type(type = "text")
   private String work;
 
   @Expose
-  @Column(name="email")
+  @Column(name = "email")
   @Type(type = "text")
-  private  String email;
+  private String email;
 
   @Expose
-  @Column(name="email2")
+  @Column(name = "email2")
   @Type(type = "text")
   private String email2;
 
   @Expose
-  @Column(name="email3")
+  @Column(name = "email3")
   @Type(type = "text")
   private String email3;
 
-  @Transient
-  @XStreamOmitField
-  private  String group;
+  // @Transient
+  // @XStreamOmitField
+  // private  String group;
 
   @Transient
   @XStreamOmitField
@@ -79,32 +81,32 @@ public class ContactData {
   private String photo;
 
   @Expose
-  @Column(name="bday", columnDefinition = "tinyint")
+  @Column(name = "bday", columnDefinition = "tinyint")
   private String birthDate;
 
   @Expose
-  @Column(name="bmonth")
+  @Column(name = "bmonth")
   private String birthMonth;
 
   @Expose
-  @Column(name="byear")
+  @Column(name = "byear")
   private String birthYear;
 
-
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name = "address_in_groups", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+  private Set<GroupData> groups = new HashSet<GroupData>();
 
 
   public ContactData withBirthDate(String birthDate) {
-    this.birthDate= birthDate;
+    this.birthDate = birthDate;
     return this;
   }
-
 
 
   public ContactData withBirthMonth(String birthMonth) {
     this.birthMonth = birthMonth;
     return this;
   }
-
 
 
   public ContactData withBirthYear(String birthYear) {
@@ -116,9 +118,6 @@ public class ContactData {
     this.photo = photo.getPath();
     return this;
   }
-
-
-
 
 
   public ContactData withAllPhones(String allPhones) {
@@ -179,10 +178,6 @@ public class ContactData {
     return this;
   }
 
-  public ContactData withGroup(String group) {
-    this.group = group;
-    return this;
-  }
 
   public ContactData withId(int id) {
     this.id = id;
@@ -190,34 +185,57 @@ public class ContactData {
   }
 
 
-
+  public Groups getGroups() {
+    return new Groups(groups);
+  }
 
   public int getId() {
     return id;
   }
+
   public String getFirstName() {
     return firstName;
   }
+
   public String getLastName() {
     return lastName;
   }
+
   public String getAddress() {
     return address;
   }
+
   public String getHome() {
     return home;
   }
-  public String getMobile() { return mobile; }
-  public String getWork() { return work; }
+
+  public String getMobile() {
+    return mobile;
+  }
+
+  public String getWork() {
+    return work;
+  }
+
   public String getEmail() {
     return email;
   }
-  public String getEmail2() { return email2; }
-  public String getEmail3() {return email3; }
-  public String getGroup() { return group; }
-  public String getAllPhones() { return allPhones; }
 
-  public String getAllEmails() { return allEmails; }
+  public String getEmail2() {
+    return email2;
+  }
+
+  public String getEmail3() {
+    return email3;
+  }
+
+  public String getAllPhones() {
+    return allPhones;
+  }
+
+  public String getAllEmails() {
+    return allEmails;
+  }
 
   public File getPhoto() {
     if (photo != null) {
@@ -252,7 +270,6 @@ public class ContactData {
             ", email='" + email + '\'' +
             ", email2='" + email2 + '\'' +
             ", email3='" + email3 + '\'' +
-            ", group='" + group + '\'' +
             ", photo='" + photo + '\'' +
             ", birthDate='" + birthDate + '\'' +
             ", birthMonth='" + birthMonth + '\'' +
@@ -283,5 +300,10 @@ public class ContactData {
   @Override
   public int hashCode() {
     return Objects.hash(id, firstName, lastName, address, home, mobile, work, email, email2, email3, birthDate, birthMonth, birthYear);
+  }
+
+  public ContactData inGroup(GroupData group) {
+    groups.add(group);
+    return this;
   }
 }
