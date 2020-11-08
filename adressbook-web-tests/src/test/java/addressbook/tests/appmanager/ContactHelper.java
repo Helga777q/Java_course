@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import java.util.List;
-import java.util.Objects;
+
 
 public class ContactHelper extends BaseHelper {
 
@@ -254,4 +254,18 @@ public class ContactHelper extends BaseHelper {
     addGroup(group);
   }
 
+  public void groupContactPageById(ContactData contact) {
+    if (contact.getGroups().size()>0){
+      String id = String.valueOf(contact.getGroups().iterator().next().getId());
+      new Select(wd.findElement(By.name("group"))).selectByValue(id);
+    }
+  }
+
+  public void returnToGroupContactPage(GroupData group){
+    click(By.cssSelector(String.format("a[href='./?group=%s']",group.getId())));
+  }
+
+  public void removeFromGroup() {
+    click(By.name("remove"));
+  }
 }
