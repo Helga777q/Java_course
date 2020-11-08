@@ -12,47 +12,6 @@
     <birthDate>25</birthDate>
     <birthMonth>July</birthMonth>
     <birthYear>1991</birthYear>
-  </contact>
-  <contact>
-    <firstName>First Name 1</firstName>
-    <lastName>Last Name 1</lastName>
-    <address>Some new address, str 1</address>
-    <home>+1-666-1</home>
-    <mobile>+1-5555-1</mobile>
-    <work>+1-5777-1</work>
-    <email>testemail1@gmail.com</email>
-    <email2>test21@gmail.com</email2>
-    <email3>test31@gmail.com</email3>
-    <birthDate>23</birthDate>
-    <birthMonth>August</birthMonth>
-    <birthYear>1997</birthYear>
-  </contact>
-  <contact>
-    <firstName>First Name 2</firstName>
-    <lastName>Last Name 2</lastName>
-    <address>Some new address, str 2</address>
-    <home>+1-666-2</home>
-    <mobile>+1-5555-2</mobile>
-    <work>+1-5777-2</work>
-    <email>testemail2@gmail.com</email>
-    <email2>test22@gmail.com</email2>
-    <email3>test32@gmail.com</email3>
-    <birthDate>2</birthDate>
-    <birthMonth>March</birthMonth>
-    <birthYear>1963</birthYear>
-  </contact>
-  <contact>
-    <firstName>First Name 3</firstName>
-    <lastName>Last Name 3</lastName>
-    <address>Some new address, str 3</address>
-    <home>+1-666-3</home>
-    <mobile>+1-5555-3</mobile>
-    <work>+1-5777-3</work>
-    <email>testemail3@gmail.com</email>
-    <email2>test23@gmail.com</email2>
-    <email3>test33@gmail.com</email3>
-    <birthDate>23</birthDate>
-    <birthMonth>January</birthMonth>
-    <birthYear>1965</birthYear>
+    <groups>null</groups>
   </contact>
 </list>

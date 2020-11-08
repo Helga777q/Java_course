@@ -270,12 +270,16 @@ public class ContactData {
             ", email='" + email + '\'' +
             ", email2='" + email2 + '\'' +
             ", email3='" + email3 + '\'' +
+            ", allPhones='" + allPhones + '\'' +
+            ", allEmails='" + allEmails + '\'' +
             ", photo='" + photo + '\'' +
             ", birthDate='" + birthDate + '\'' +
             ", birthMonth='" + birthMonth + '\'' +
             ", birthYear='" + birthYear + '\'' +
+            ", groups=" + groups +
             '}';
   }
+
 
   @Override
   public boolean equals(Object o) {
@@ -294,12 +298,13 @@ public class ContactData {
             Objects.equals(email3, that.email3) &&
             Objects.equals(birthDate, that.birthDate) &&
             Objects.equals(birthMonth, that.birthMonth) &&
-            Objects.equals(birthYear, that.birthYear);
+            Objects.equals(birthYear, that.birthYear) &&
+            Objects.equals(groups, that.groups);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, firstName, lastName, address, home, mobile, work, email, email2, email3, birthDate, birthMonth, birthYear);
+    return Objects.hash(id, firstName, lastName, address, home, mobile, work, email, email2, email3, birthDate, birthMonth, birthYear, groups);
   }
 
   public ContactData inGroup(GroupData group) {

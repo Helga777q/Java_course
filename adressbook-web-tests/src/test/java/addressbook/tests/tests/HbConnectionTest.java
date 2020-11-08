@@ -34,7 +34,7 @@ public class HbConnectionTest {
   }
 
 
-  @Test(enabled=false)
+  @Test(enabled=true)
   public void testHbConnectionGroupData(){
     Session session = sessionFactory.openSession();
     session.beginTransaction();

@@ -46,5 +46,4 @@ public Contacts contacts(){
   return new Contacts(result);
 }
 
-
 }

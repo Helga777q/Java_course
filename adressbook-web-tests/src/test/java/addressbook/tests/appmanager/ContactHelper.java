@@ -2,12 +2,15 @@ package addressbook.tests.appmanager;
 
 import addressbook.tests.model.ContactData;
 import addressbook.tests.model.Contacts;
+import addressbook.tests.model.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ContactHelper extends BaseHelper {
 
@@ -237,6 +240,18 @@ public class ContactHelper extends BaseHelper {
     return new ContactData().withId(contact.getId()).withFirstName(firstName).withLastName(lastName).withAddress(address)
             .withHome(home).withMobile(mobile).withWork(work)
             .withEmail(email).withEmailSecond(email2).withEmailThird(email3);
+  }
+
+
+  public void addGroup(GroupData group) {
+    String id = String.valueOf(group.getId());
+    new Select(wd.findElement(By.name("to_group"))).selectByValue(id);
+    click(By.name("add"));
+  }
+
+  public void addContactToGroup(ContactData contact, GroupData group) {
+    selectContactById(contact.getId());
+    addGroup(group);
   }
 
 }
