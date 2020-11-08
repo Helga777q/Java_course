@@ -34,7 +34,6 @@ public class ContactAddToGroupTests extends TestBase {
 
   }
 
-//g.getName().equals(group.getName())
   @Test
   public void addContactToGroupTest(){
     Contacts contacts = app.db().contacts();

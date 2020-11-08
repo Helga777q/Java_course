@@ -268,4 +268,12 @@ public class ContactHelper extends BaseHelper {
   public void removeFromGroup() {
     click(By.name("remove"));
   }
+
+  public void removeContactFromGroup(ContactData contact, GroupData group) {
+    groupContactPageById(contact);
+    selectContactById(contact.getId());
+    removeFromGroup();
+    returnToGroupContactPage(group);
+  }
+
 }
