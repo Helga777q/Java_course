@@ -25,7 +25,6 @@ public class ApplicationManager {
   private MailHelper mailHelper;
   private JamesHelper jamesHelper;
 
-
   public ApplicationManager(String browser)  {
     this.browser = browser;
     properties = new Properties();
@@ -101,5 +100,6 @@ public class ApplicationManager {
     }
     return jamesHelper;
   }
+
 
 }
