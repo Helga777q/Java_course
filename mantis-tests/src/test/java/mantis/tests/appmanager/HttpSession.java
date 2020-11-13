@@ -38,7 +38,7 @@ public class HttpSession {
     CloseableHttpResponse response = httpClient.execute(post); //send POST request
     String body = getTextFrom(response); // get Text of the response
     return body.contains(String.format
-            ("<span class=\"label hidden-xs label-default arrowed\">%s</span>", username)); //check that the response has specific text
+            ("<span class=\"user-info\">%s</span>", username)); //check that the response has specific text
 
   }
 
@@ -56,7 +56,7 @@ public class HttpSession {
     CloseableHttpResponse response = httpClient.execute(get); // send GET request
     String body = getTextFrom(response); // get Text of the response
     return body.contains(String.format
-            ("<span class=\"label hidden-xs label-default arrowed\">%s</span>", username)); //check that the response has specific text on the page
+            ("<span class=\"user-info\">%s</span>", username)); //check that the response has specific text on the page
   }
 
 

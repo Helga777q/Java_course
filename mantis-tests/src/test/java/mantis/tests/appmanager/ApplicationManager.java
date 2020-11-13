@@ -2,6 +2,7 @@ package mantis.tests.appmanager;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -21,6 +22,7 @@ public class ApplicationManager {
   private String browser;
   private RegistrationHelper registrationHelper;
   private FtpHelper ftp;
+  private MailHelper mailHelper;
 
 
   public ApplicationManager(String browser)  {
@@ -67,7 +69,9 @@ public class ApplicationManager {
       if (browser.equals(BrowserType.FIREFOX)){
         wd = new FirefoxDriver();
       } else if (browser.equals(BrowserType.CHROME)){
-        wd = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("-lang=en-GB");
+        wd = new ChromeDriver(options);
       } else if (browser.equals(BrowserType.IE)){
         wd = new InternetExplorerDriver();
       } else if (browser.equals(BrowserType.OPERA)){
@@ -81,5 +85,12 @@ public class ApplicationManager {
     }
     return wd;
 
+  }
+
+  public MailHelper mail(){
+    if(mailHelper==null){
+      mailHelper = new MailHelper(this);
+    }
+    return mailHelper;
   }
 }
