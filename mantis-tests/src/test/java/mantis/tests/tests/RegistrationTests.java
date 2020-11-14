@@ -1,6 +1,7 @@
 package mantis.tests.tests;
 
 import mantis.tests.model.MailMessage;
+import mantis.tests.model.UserData;
 import org.testng.annotations.Test;
 import ru.lanwen.verbalregex.VerbalExpression;
 
@@ -23,22 +24,16 @@ public class RegistrationTests extends TestBase {
     String email = String.format("user%s@localhost", now);
     String user = String.format("user%s",now);
     String password = "password";
-
-    app.james().createUser(user, password);
+    app.james().createUser(new UserData().withLogin(user).withPassword(password));
     app.registration().start(user, email);
     //List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
     List<MailMessage> mailMessages = app.james().waitForMail(user, password, 60000);
-    String confirmationLink = findConfirmationLink(mailMessages, email);
+    String confirmationLink = app.james().findConfirmationLink(mailMessages, email);
     app.registration().finish(confirmationLink, password);
     assertTrue(app.newSession().login(user, password));
-
   }
 
-  private String findConfirmationLink(List<MailMessage> mailMessages, String email) {
-    MailMessage mailMessage = mailMessages.stream().filter((m) -> m.to.equals(email)).findFirst().get();
-    VerbalExpression regex = VerbalExpression.regex().find("http://").nonSpace().oneOrMore().build();
-    return regex.getText(mailMessage.text);
-  }
+
 
   //@AfterMethod(alwaysRun = true)
   public void stopMailServer(){

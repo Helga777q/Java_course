@@ -1,7 +1,10 @@
 package mantis.tests.appmanager;
 
 import mantis.tests.model.MailMessage;
+import mantis.tests.model.UserData;
 import org.apache.commons.net.telnet.TelnetClient;
+import ru.lanwen.verbalregex.VerbalExpression;
+import sun.misc.resources.Messages;
 
 import javax.mail.*;
 import java.io.IOException;
@@ -20,7 +23,7 @@ public class JamesHelper {
   private String mailserver;
   private InputStream in;
   private PrintStream out;
-  
+
 
   public JamesHelper(ApplicationManager app){
     this.app =app;
@@ -28,14 +31,14 @@ public class JamesHelper {
     mailSession=Session.getDefaultInstance(System.getProperties());
   }
 
-  public void createUser(String name, String password){
+  public void createUser(UserData user){
     initTelnetSession();
-    write("adduser " + name + " " + password);
-    String result = readUntil("User " + name + " added");
+    write("adduser " + user.getLogin() + " " + user.getPassword());
+    String result = readUntil("User " + user.getLogin() + " added");
     closeTelnetSession();
   }
 
-  private void initTelnetSession() {
+  public void initTelnetSession() {
     mailserver = app.getProperty("mailserver.host");
     int port = Integer.parseInt(app.getProperty("mailserver.port"));
     String login = app.getProperty("mailserver.adminlogin");
@@ -51,9 +54,9 @@ public class JamesHelper {
 
     //first login attempt
     readUntil("Login id:");
-    write("test");
+    write("");
     readUntil("Password:");
-    write("test2");
+    write("");
 
 
     //second login attempt
@@ -68,7 +71,7 @@ public class JamesHelper {
   }
 
 
-  private void closeTelnetSession(){
+  public void closeTelnetSession(){
     write("quit");
   }
 
@@ -130,6 +133,16 @@ public class JamesHelper {
     return messages;
   }
 
+  public void deleteEmails(String username, String password) throws MessagingException {
+    Folder inbox = openInbox(username, password);
+    Message[] messages = inbox.getMessages();
+    for (int i =0; i<messages.length;i++){
+      Message message= messages[i];
+      message.setFlag(Flags.Flag.DELETED, true);
+    }
+    closeFolder(inbox);
+  }
+
   public static MailMessage toModelMail(Message m){
     try {
       return new MailMessage(m.getAllRecipients()[0].toString(), (String) m.getContent());
@@ -154,6 +167,12 @@ public class JamesHelper {
   private void  closeFolder(Folder folder) throws  MessagingException{
     folder.close(true);
     store.close();
+  }
+
+  public String findConfirmationLink(List<MailMessage> mailMessages, String email) {
+    MailMessage mailMessage = mailMessages.stream().filter((m) -> m.to.equals(email)).findFirst().get();
+    VerbalExpression regex = VerbalExpression.regex().find("http://").nonSpace().oneOrMore().build();
+    return regex.getText(mailMessage.text);
   }
   
   
