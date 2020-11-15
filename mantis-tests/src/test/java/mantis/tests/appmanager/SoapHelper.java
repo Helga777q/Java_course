@@ -2,6 +2,7 @@ package mantis.tests.appmanager;
 
 import biz.futureware.mantis.rpc.soap.client.*;
 import mantis.tests.model.Issue;
+import mantis.tests.model.IssueStatus;
 import mantis.tests.model.Project;
 
 import javax.xml.rpc.ServiceException;
@@ -10,6 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -54,4 +56,27 @@ public Set<Project> getProjects() throws MalformedURLException, ServiceException
 
 
   }
+
+  public String getIssueStatus(int issueId) throws MalformedURLException, ServiceException, RemoteException {
+    MantisConnectPortType mc = getMantisConnect();
+    IssueData issueData = mc.mc_issue_get("administrator", "root", BigInteger.valueOf(issueId));
+    ObjectRef status = issueData.getStatus();
+    String statusName = status.getName();
+    //getStatusList();
+    return statusName;
+  }
+
+  //get list of status for the bugtracker
+  public void getStatusList() throws MalformedURLException, ServiceException, RemoteException {
+    MantisConnectPortType mc = getMantisConnect();
+    List<IssueStatus> issueStatusList = Arrays.asList(mc.mc_enum_status("administrator", "root")).stream()
+            .map((s) -> new IssueStatus().withId(s.getId().intValue()).withStatus(s.getName()))
+            .collect(Collectors.toList());
+    for (IssueStatus status: issueStatusList){
+      System.out.println(status.getStatus());
+    }
+  }
+
+
+
 }
