@@ -7,6 +7,8 @@ public class Issue {
   private int id;
   private String subject;
   private String description;
+  private String state;
+  private String state_name;
 
 
   public Issue withId(int id) {
@@ -16,6 +18,19 @@ public class Issue {
 
   public Issue withSubject(String subject) {
     this.subject = subject;
+    return this;
+
+  }
+
+  public Issue withStateName(String state_name) {
+    this.state_name = state_name;
+    return this;
+
+  }
+
+
+  public Issue withState(String state) {
+    this.state = state;
     return this;
 
   }
@@ -34,8 +49,16 @@ public class Issue {
     return subject;
   }
 
+  public String getState() {
+    return state;
+  }
+
   public String getDescription() {
     return description;
+  }
+
+  public String getStateName() {
+    return state_name;
   }
 
   @Override
@@ -44,6 +67,8 @@ public class Issue {
             "id=" + id +
             ", subject='" + subject + '\'' +
             ", description='" + description + '\'' +
+            ", state='" + state + '\'' +
+            ", stateName='" + state_name + '\'' +
             '}';
   }
 
