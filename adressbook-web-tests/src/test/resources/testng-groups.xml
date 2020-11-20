@@ -6,7 +6,7 @@
             <class name="addressbook.tests.tests.GroupCreationTests" />
             <class name="addressbook.tests.tests.GroupUpdateTests">
                 <methods>
-                    <include name="testGroupUpdate"/>
+                    <include name="testGroupUpdateDb"/>
                 </methods>
             </class>
             <class name="addressbook.tests.tests.GroupDeletionTests" />
