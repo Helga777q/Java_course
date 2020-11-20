@@ -1,5 +1,4 @@
-package javacourse.sandbox;
-
+import javacourse.sandbox.Point;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
