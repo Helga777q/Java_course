@@ -7,7 +7,6 @@
             <class name="addressbook.tests.tests.ContactCreationTests">
             <methods>
                 <include name="testContactCreationJsonFile"/>
-                <include name="testContactCreationXMmlFile"/>
             </methods>
             </class>
             <class name="addressbook.tests.tests.ContactUpdateTests">
@@ -18,7 +17,7 @@
             <class name="addressbook.tests.tests.ContactDeletionTests">
                 <methods>
                     <include name="testContactDeletionHomePage"/>
-                    <include name="testContactDeletionViewEditPage"/>
+                    <include name="testAllContactsDeletionHome"/>
                 </methods>
             </class>
             <class name="addressbook.tests.tests.ContactEmailsTests"/>
