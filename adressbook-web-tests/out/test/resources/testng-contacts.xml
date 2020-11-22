@@ -13,12 +13,6 @@
             <methods>
                 <exclude name="testNegativeContactUpdateEditPage"/>
             </methods>
-        </class>
-            <class name="addressbook.tests.tests.ContactDeletionTests">
-                <methods>
-                    <include name="testContactDeletionHomePage"/>
-                    <include name="testAllContactsDeletionHome"/>
-                </methods>
             </class>
             <class name="addressbook.tests.tests.ContactEmailsTests"/>
             <class name="addressbook.tests.tests.ContactPhonesTests"/>
