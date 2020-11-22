@@ -48,6 +48,10 @@ task testGroups (type: Test) {
 
 }
 
+testGroups.doFirst {
+    jvmArgs "-javaagent:${configurations.agent.singleFile}"
+}
+
 task testContacts (type: Test) {
     useTestNG {
         suites 'src/test/resources/testng-contacts.xml'
