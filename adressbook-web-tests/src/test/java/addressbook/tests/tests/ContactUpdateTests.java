@@ -64,7 +64,7 @@ public class ContactUpdateTests extends TestBase {
     ContactData updatedContact = before.iterator().next();
     ContactData contact = new ContactData()
             .withId(updatedContact.getId())
-            .withFirstName("Monica").withLastName("Bing").withAddress("testadd some address")
+            .withFirstName("Monica'").withLastName("Bing").withAddress("testadd some address")
             .withEmail("mon@friends.com").withEmailSecond("email2@test").withEmailThird("email@test.com")
             .withHome("+1111").withMobile("+222-333").withWork("+1-0000")
             .withBirthDate("11").withBirthMonth("October").withBirthYear("2001");
