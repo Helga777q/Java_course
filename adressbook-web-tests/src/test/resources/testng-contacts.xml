@@ -9,11 +9,7 @@
                 <include name="testContactCreationJsonFile"/>
             </methods>
             </class>
-            <class name="addressbook.tests.tests.ContactUpdateTests">
-            <methods>
-                <exclude name="testNegativeContactUpdateEditPage"/>
-            </methods>
-            </class>
+            <class name="addressbook.tests.tests.ContactUpdateTests"/>
             <class name="addressbook.tests.tests.ContactEmailsTests"/>
             <class name="addressbook.tests.tests.ContactPhonesTests"/>
             <class name="addressbook.tests.tests.ContactPhotoTests"/>

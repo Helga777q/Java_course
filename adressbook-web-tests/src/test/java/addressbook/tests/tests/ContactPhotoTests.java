@@ -13,7 +13,7 @@ public class ContactPhotoTests extends TestBase {
   @Test
   public void photoCreationContactTest (){
     app.goTo().homePage();
-    File photo = new File("src/test/resources/test_photo4.bmp");
+    File photo = new File("src/test/resources/test_photo.bmp");
     ContactData contact = new ContactData().withFirstName("Ross with photo").withLastName("Geller").withPhoto(photo);
     app.contact().create(contact);
     app.contact().returnToHomePage();
