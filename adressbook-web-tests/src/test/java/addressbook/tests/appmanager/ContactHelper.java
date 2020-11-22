@@ -125,7 +125,7 @@ public class ContactHelper extends BaseHelper {
   }
 
   public void waitForHomePageOpens(){
-    waitForPresenceOfElement(20, (By.id("maintable")));
+    waitForPresenceOfElement(15, (By.id("maintable")));
   }
 
 
